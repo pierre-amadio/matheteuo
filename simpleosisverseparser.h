@@ -27,7 +27,7 @@
 class simpleOsisVerseParser
 {
 public:
-    simpleOsisVerseParser(QString osisVerse);
+    simpleOsisVerseParser(QString osisVerse,QString moduleName);
     QList<verseChunk> getVerselist();
 
 private:

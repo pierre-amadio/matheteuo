@@ -27,7 +27,7 @@
 using namespace::sword;
 
 
-simpleOsisVerseParser::simpleOsisVerseParser(QString verse)
+simpleOsisVerseParser::simpleOsisVerseParser(QString verse, QString curModule)
 {
 
     QList<QString> wordList;
@@ -60,12 +60,12 @@ simpleOsisVerseParser::simpleOsisVerseParser(QString verse)
 
 
     foreach( QString curWord, wordList ) {
-       bool isXml=false;
-       QString tmpWord=curWord;
+        // bool isXml=false;
+        QString tmpWord=curWord;
 
-       verseChunk tmpChunk;
+        verseChunk tmpChunk;
 
-       if(curWord.mid(0,2)=="<w") {
+        if(curWord.mid(0,2)=="<w") {
             tmpChunk.setIsXmlTag(true);
             QString tmpRoot="none found";
             QString tmpStrong="none found";
@@ -94,14 +94,33 @@ simpleOsisVerseParser::simpleOsisVerseParser(QString verse)
             for (StringList::iterator it = attributes.begin(); it != attributes.end(); it++) {
                 QString attributeName=it->c_str();
 
-                if(attributeName=="lemma") {
-                    tmpStrong=xmlTag.getAttribute("lemma", 1, ' ');
-                    tmpRoot=xmlTag.getAttribute("lemma", 0, ' ');
-                } else if (attributeName=="morph"){
-                    tmpMorph=xmlTag.getAttribute("morph", 0, ' ');
-                } else {
-                    qDebug()<<"unknown attributeName"<<attributeName;
+                if(curModule=="MorphGNT") {
+
+                    if(attributeName=="lemma") {
+                        tmpStrong=xmlTag.getAttribute("lemma", 1, ' ');
+                        tmpRoot=xmlTag.getAttribute("lemma", 0, ' ');
+                    } else if (attributeName=="morph"){
+                        tmpMorph=xmlTag.getAttribute("morph", 0, ' ');
+                    } else {
+                        qDebug()<<"unknown attributeName"<<attributeName;
                     }
+                }
+
+                if(curModule=="OSHB") {
+
+                    qDebug()<<"AttributeName"<<attributeName;
+                    qDebug()<<"curWord "<<curWord.toUtf8();
+                    if(attributeName=="lemma") {
+                        tmpStrong=xmlTag.getAttribute("lemma",0,' ');
+                    } else if (attributeName=="morph") {
+                        tmpMorph=xmlTag.getAttribute("morph",0,' ');
+                    } else {
+                        qDebug()<<"unknown attributeName"<<attributeName;
+                    }
+
+
+                }
+
 
 
             }
@@ -112,15 +131,15 @@ simpleOsisVerseParser::simpleOsisVerseParser(QString verse)
             tmpChunk.morph=tmpMorph;
 
 
-       } else {
+        } else {
             tmpChunk.morph="NONE";
             tmpChunk.strong="NONE";
             tmpChunk.fullWord=curWord;
-       }
+        }
 
 
 
-       verseChunkList.append(tmpChunk);
+        verseChunkList.append(tmpChunk);
 
     }
 

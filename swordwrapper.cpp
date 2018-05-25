@@ -174,8 +174,10 @@ void swordWrapper::refreshWordInfoListModel(QString vsnt){
     wordInfoListModel.clear();
     QObject *rootObject = AppEngine->rootObjects().first();
 
+    QString curModule=rootObject->property("curModuleName").toString();
+    qDebug()<<"module"<<curModule;
 
-    simpleOsisVerseParser simpleParser(vsnt);
+    simpleOsisVerseParser simpleParser(vsnt,curModule);
     QList<verseChunk> list=simpleParser.getVerselist();
     QString htmlText;
     int cnt=0;
@@ -304,7 +306,7 @@ QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
 
     //qDebug()<<"root"<<src->rootWord;
     if(module=="MorphGNT") {
-        //So the stringId should looks like "strong:G2532"
+        //So the strongId should looks like "strong:G2532"
         //And the rootWord something like "lemma.Strong:βίβλος"
         out="<b>";
         out.append(src->rootWord.mid(13,src->rootWord.length()-13));
@@ -320,6 +322,19 @@ QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
         QString tmpRaw=QString(target->renderText());
         tmpRaw.replace("\n","<br>");
         out.append(tmpRaw);
+    }
+
+    if(module=="OSHB"){
+        //So the strongId should looks like "strong:H07225"
+        //and the rootWord like:
+        qDebug()<<"root "<<src->rootWord;
+        qDebug()<<"strong "<<src->StrongId;
+        QString q=src->StrongId.mid(8,src->StrongId.length()-8);
+        qDebug()<<q;
+        target = library.getModule("StrongsHebrew");
+        if (!target) {qDebug()<<"Ooops StrongsHebrew module not found"; }
+        target->setKey(q.toStdString().c_str());
+        out=QString(target->renderText());
     }
 
     src->StrongDescription=out;
