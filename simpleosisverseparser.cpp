@@ -104,12 +104,10 @@ simpleOsisVerseParser::simpleOsisVerseParser(QString verse, QString curModule)
                     } else {
                         qDebug()<<"unknown attributeName"<<attributeName;
                     }
-                }
+                } else if(curModule=="OSHB") {
 
-                if(curModule=="OSHB") {
-
-                    qDebug()<<"AttributeName"<<attributeName;
-                    qDebug()<<"curWord "<<curWord.toUtf8();
+                    //qDebug()<<"AttributeName"<<attributeName;
+                    //qDebug()<<"curWord "<<curWord.toUtf8();
                     if(attributeName=="lemma") {
                         tmpStrong=xmlTag.getAttribute("lemma",0,' ');
                     } else if (attributeName=="morph") {
@@ -119,9 +117,9 @@ simpleOsisVerseParser::simpleOsisVerseParser(QString verse, QString curModule)
                     }
 
 
+                } else {
+                    qDebug()<<"Unkown module:"<<curModule;
                 }
-
-
 
             }
 

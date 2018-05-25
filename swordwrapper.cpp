@@ -334,7 +334,11 @@ QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
         target = library.getModule("StrongsHebrew");
         if (!target) {qDebug()<<"Ooops StrongsHebrew module not found"; }
         target->setKey(q.toStdString().c_str());
-        out=QString(target->renderText());
+
+        QString tmpRaw=QString(target->renderText());
+        tmpRaw.replace("\n","<br>");
+
+        out=tmpRaw;
     }
 
     src->StrongDescription=out;
@@ -360,6 +364,12 @@ QString swordWrapper::getMorphInfo(QString module, wordInfo * src){
         target->setKey(q.toStdString().c_str());
         out=target->renderText();
 
+    }
+
+    if(module=="OSHB") {
+        qDebug()<<"TODO analyse hebrew morphcode"<<src->morphCode;
+        out=QString(src->morphCode);
+        out.append("\n\nhttp://openscriptures.github.io/morphhb/parsing/HebrewMorphologyCodes.html");
     }
 
 
