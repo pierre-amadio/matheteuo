@@ -1,0 +1,23 @@
+This is a simple tool supposed to help study koine greek and hebrew.
+
+The idea is to have an automated way to get vocabulary and grammar
+information easily available for the student in a similar way as
+what the "daily dose of" teaching sites offer in their video.
+
+http://dailydoseofgreek.com/
+http://dailydoseofhebrew.com/
+
+The program assume several sword module are already installed:
+
+[MorphGNT]  	(2.0)  	- Morphologically Parsed Greek New Testament based on the SBLGNT
+[OSHB]  	(1.2)  	- Open Scriptures Hebrew Bible
+[StrongsHebrew]  	(1.2)  	- Strong's Hebrew Bible Dictionary
+[StrongsGreek]  	(1.2)  	- Strong's Greek Bible Dictionary
+[Robinson]  	(2.1)  	- Robinson's Morphological Analysis Codes
+
+You will need to install them manually before running matheteuo.
+
+More information about the sword projects is available here:
+
+http://www.crosswire.org/sword/index.jsp
+

@@ -47,3 +47,6 @@ else:unix: LIBS += -L$$PWD/../../../../../usr/local/sword/lib/ -lsword-1.8.1
 
 INCLUDEPATH += $$PWD/../../../../../usr/local/sword/include/sword
 DEPENDPATH += $$PWD/../../../../../usr/local/sword/include/sword
+
+DISTFILES += \
+    README
