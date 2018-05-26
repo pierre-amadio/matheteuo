@@ -79,6 +79,16 @@ void swordWrapper::bookNameChangedSlot(const QString &curBook) {
 void swordWrapper::chapterChangedSlot(int chapterNbr) {
     //qDebug()<<"chapterChangedSlot; So chapter is now "<<chapterNbr;
     QObject *rootObject = AppEngine->rootObjects().first();
+
+    int oldVerseMax=rootObject->property("maxVerse").toInt();
+    int newVerseMax=getVerseMax();
+    if(oldVerseMax==newVerseMax) {
+        //this can happen when switching from gen:10 to gen:11 by example
+        //because both chapter have 32 verses.
+        qDebug()<<"We need to refresh verseview";
+
+    }
+
     rootObject->setProperty("maxVerse", getVerseMax());
 
 }
