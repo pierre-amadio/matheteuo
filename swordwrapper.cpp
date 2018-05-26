@@ -287,7 +287,10 @@ QString swordWrapper::getVerse(QString module, QString book ,int chapter, int ve
     library.setGlobalOption("Morphological Tags","On");
     library.setGlobalOption("Strong's Numbers","On");
     library.setGlobalOption("OSISStrongs","On");
-
+    library.setGlobalOption("Hebrew Cantillation", "On");
+    library.setGlobalOption("Hebrew Vowel Points", "On");
+    library.setGlobalOption("Greek Accents", "On");
+    library.setGlobalOption("Textual Variants", "On");
 
 
     SWModule *bible = library.getModule(module.toStdString().c_str());
