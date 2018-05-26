@@ -154,7 +154,7 @@ Window {
 
         anchors {
             top:rootWindow.top
-            bottom:selectVerseView.top
+            bottom:verseView.top
             left:rootWindow.left
             right:rootWindow.right
         }
