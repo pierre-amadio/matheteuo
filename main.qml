@@ -7,7 +7,8 @@ Window {
     id: rootWindow
     objectName: "rootWindow"
     visible:true
-    width: 800; height: 440
+    width: 800;
+    height: 440
     //color: "#00EE00"
     //opacity: .9
     onHeightChanged: {
@@ -288,8 +289,8 @@ Window {
         id: verseView
         objectName: "verseView"
         width:rootWindow.width
-        //height:2*(rootWindow.height-selectVerseRow.height)/3
-        height:275
+        height:1*(rootWindow.height-selectVerseRow.height)/3
+        //height:275
         //opacity: .4
         //anchors.bottom: parent.bottom
         //anchors.top:selectVerseRow.bottom
@@ -355,11 +356,11 @@ Window {
 
     Rectangle {
         id:grammarView
-        width:rootWindow.width
+        width:parent.width
         //opacity: .5
         //height:2*(rootWindow.height-selectVerseRow.height)/10
-        height:225
-        //color:"yellow"
+        height:2*(rootWindow.height-selectVerseRow.height)/3
+        color:"yellow"
 
         anchors {
             top:verseView.bottom
@@ -371,13 +372,13 @@ Window {
 
         TextArea {
             id: strongView
-            width:rootWindow.width/2
+            width:parent.width/2
             height:parent.height
             textFormat: Text.RichText
             anchors{
                 top:parent.top
-                left:rootWindow.left
-                right:morphView.left
+                left:parent.left
+                //right:morphView.left
                 bottom: parent.bottom
             }
 
@@ -394,15 +395,15 @@ Window {
 
         TextArea {
             id: morphView
-            width:rootWindow.width/2
+            //width:parent.width/2
             height:parent.height
             //textFormat: Text.RichText
 
             anchors{
                 top:parent.top
                 left:strongView.right
-                right:rootWindow.right
-                bottom: rootWindow.bottom
+                right:parent.right
+                bottom: parent.bottom
             }
 
             font {
