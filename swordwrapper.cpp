@@ -86,10 +86,10 @@ void swordWrapper::chapterChangedSlot(int chapterNbr) {
         //this can happen when switching from gen:10 to gen:11 by example
         //because both chapter have 32 verses.
         qDebug()<<"We need to refresh verseview";
-
+        rootObject->setProperty("maxVerse", -1);
     }
 
-    rootObject->setProperty("maxVerse", getVerseMax());
+    rootObject->setProperty("maxVerse", newVerseMax);
 
 }
 
