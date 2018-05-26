@@ -11,7 +11,6 @@ Window {
     //color: "#00EE00"
     //opacity: .9
     onHeightChanged: {
-        console.log(" ")
         //console.log("curModuleName",curModuleName)
         //console.log("currBookName",curBookName)
         //console.log("curChapter",curChapter)
@@ -20,10 +19,10 @@ Window {
         var start=verseWindow.selectionStart
         var end=verseWindow.selectionEnd
         var curTxt=verseWindow.getText(start,end)
-        console.log("begin at",start)
-        console.log(verseWindow.selectedText)
-        console.log("end at",end)
-        console.log("\n",curTxt)
+        //console.log("begin at",start)
+        //console.log(verseWindow.selectedText)
+        //console.log("end at",end)
+        //console.log("\n",curTxt)
         verseWindow.font.underline=false
     }
 
