@@ -112,6 +112,8 @@ simpleOsisVerseParser::simpleOsisVerseParser(QString verse, QString curModule)
                         tmpStrong=xmlTag.getAttribute("lemma",0,' ');
                     } else if (attributeName=="morph") {
                         tmpMorph=xmlTag.getAttribute("morph",0,' ');
+                    } else if (attributeName=="n") {
+                        //qDebug()<<"What to do with "<<xmlTag;
                     } else {
                         qDebug()<<"unknown attributeName"<<attributeName;
                     }
