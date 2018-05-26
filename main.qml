@@ -289,7 +289,7 @@ Window {
         id: verseView
         objectName: "verseView"
         width:rootWindow.width
-        height:1*(rootWindow.height-selectVerseRow.height)/3
+        height:15*(rootWindow.height-selectVerseRow.height)/30
         //height:275
         //opacity: .4
         //anchors.bottom: parent.bottom
@@ -359,8 +359,8 @@ Window {
         width:parent.width
         //opacity: .5
         //height:2*(rootWindow.height-selectVerseRow.height)/10
-        height:2*(rootWindow.height-selectVerseRow.height)/3
-        color:"yellow"
+        height:15*(rootWindow.height-selectVerseRow.height)/30
+        //color:"yellow"
 
         anchors {
             top:verseView.bottom
@@ -375,6 +375,8 @@ Window {
             width:parent.width/2
             height:parent.height
             textFormat: Text.RichText
+            readOnly: true
+
             anchors{
                 top:parent.top
                 left:parent.left
@@ -398,6 +400,8 @@ Window {
             //width:parent.width/2
             height:parent.height
             //textFormat: Text.RichText
+            readOnly: true
+
 
             anchors{
                 top:parent.top
