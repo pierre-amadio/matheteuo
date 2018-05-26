@@ -297,7 +297,7 @@ Window {
 
         anchors {
             top:selectVerseRow.bottom
-            bottom:grammarView.top
+            //bottom:grammarView.top
             left:rootWindow.left
             right:rootWindow.right
         }
