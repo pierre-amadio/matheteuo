@@ -175,7 +175,7 @@ void swordWrapper::refreshWordInfoListModel(QString vsnt){
     QObject *rootObject = AppEngine->rootObjects().first();
 
     QString curModule=rootObject->property("curModuleName").toString();
-    qDebug()<<"module"<<curModule;
+    //qDebug()<<"module"<<curModule;
 
     simpleOsisVerseParser simpleParser(vsnt,curModule);
     QList<verseChunk> list=simpleParser.getVerselist();
@@ -327,10 +327,10 @@ QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
     if(module=="OSHB"){
         //So the strongId should looks like "strong:H07225"
         //and the rootWord like:
-        qDebug()<<"root "<<src->rootWord;
-        qDebug()<<"strong "<<src->StrongId;
+        //qDebug()<<"root "<<src->rootWord;
+        //qDebug()<<"strong "<<src->StrongId;
         QString q=src->StrongId.mid(8,src->StrongId.length()-8);
-        qDebug()<<q;
+        //qDebug()<<q;
         target = library.getModule("StrongsHebrew");
         if (!target) {qDebug()<<"Ooops StrongsHebrew module not found"; }
         target->setKey(q.toStdString().c_str());
@@ -367,7 +367,7 @@ QString swordWrapper::getMorphInfo(QString module, wordInfo * src){
     }
 
     if(module=="OSHB") {
-        qDebug()<<"TODO analyse hebrew morphcode"<<src->morphCode;
+        //qDebug()<<"TODO analyse hebrew morphcode"<<src->morphCode;
         out=QString(src->morphCode);
         out.append("\n\nhttp://openscriptures.github.io/morphhb/parsing/HebrewMorphologyCodes.html");
     }
