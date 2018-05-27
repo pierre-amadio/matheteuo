@@ -16,7 +16,7 @@ var MorphParse = function()
      * @param {string} code A morph code
      * @returns (string} The morphology
      */
-    this.Parse = function(code)
+    this.parse = function(code)
     {
 		language = code.charAt(0);
 		code = code.substr(1);
@@ -25,7 +25,6 @@ var MorphParse = function()
         for (var i = 1; i < parts.length; i++) {
             morph += ', ' + parseCode(parts[i]);
         }
-        console.log("coin: "+morph)
         return morph;
     };
 
