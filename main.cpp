@@ -44,6 +44,9 @@ TODO read https://qmlbook.github.io/ch16/index.html
 multiple windows management
 http://wiki.qt.io/QML_Application_Structuring_Approaches
 
+parsing oshb morph with javascript:
+https://github.com/openscriptures/morphhb-parsing
+
 */
 
 

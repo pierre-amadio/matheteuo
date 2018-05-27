@@ -3,6 +3,10 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
+import "MorphParse.js" as MorphParse
+import "MorphCodes.js" as MorphCodes
+
+
 Window {
     id: rootWindow
     objectName: "rootWindow"
@@ -25,6 +29,9 @@ Window {
         //console.log("end at",end)
         //console.log("\n",curTxt)
         verseWindow.font.underline=false
+
+
+
     }
 
     //onHeightChanged: console.log("max chapter",maxChapter)
