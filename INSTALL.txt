@@ -35,7 +35,7 @@ diatheke -b MorphGNT -o av -f PLAIN -k Mark 1:1
 sudo apt-get install g++ qt5-default qt5-qmake qt5-doc-html cmake qt5-qmltooling-plugins qttools5-dev-tools libqt5webkit5-dev libqt5svg5-dev qml-module-qtquick2 qml-module-qtquick-controls git
 
 #if you are running ubuntu, install also the following:
-sudo apt-get install qtbase5-dev
+sudo apt-get install qtbase5-dev qml-module-qtquick-controls
 
 #get the sources:
 git clone https://github.com/pierre-amadio/matheteuo.git
