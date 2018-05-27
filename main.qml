@@ -137,7 +137,6 @@ Window {
     }
 
     onOshbMorphCodeChanged: {
-        console.log("need to cope with new OSHB code")
         //var morphC=morphViewText.substring(5,morphViewText.length)
         //console.log("oshbMorphCode",oshbMorphCode)
         var morphC=oshbMorphCode.substring(5,oshbMorphCode.length)
