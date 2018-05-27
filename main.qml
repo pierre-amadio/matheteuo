@@ -28,16 +28,15 @@ Window {
         //console.log(verseWindow.selectedText)
         //console.log("end at",end)
         //console.log("\n",curTxt)
-        verseWindow.font.underline=false
+        //verseWindow.font.underline=false
 
-        console.log(morphViewText)
-
-        var morphC=morphViewText.substring(5,morphViewText.length)
-        console.log(morphC)
-        var parser = new MorphParse.MorphParse()
-        var w =  parser.parse(morphC)
+        //console.log(morphViewText)
+        //var morphC=morphViewText.substring(5,morphViewText.length)
+        //console.log(morphC)
+        //var parser = new MorphParse.MorphParse()
+        //var w =  parser.parse(morphC)
         //var w= parser.parseCode(morphC)
-        console.log(w)
+        //console.log(w)
         // for (var p in w) {
         //    console.log(p)
         // }
@@ -67,6 +66,7 @@ Window {
     property string strongViewText:"le strong"
     property string morphViewText:"le moprh"
 
+    property string oshbMorphCode
 
     function cleanBookList(){
         console.log("Cleaning book list")
@@ -134,6 +134,21 @@ Window {
         //chapterListModel=[]
 
         newModuleSelected(curModuleName)
+    }
+
+    onOshbMorphCodeChanged: {
+        console.log("need to cope with new OSHB code")
+        //var morphC=morphViewText.substring(5,morphViewText.length)
+        //console.log("oshbMorphCode",oshbMorphCode)
+        var morphC=oshbMorphCode.substring(5,oshbMorphCode.length)
+        //console.log("morphC=",morphC)
+        var parser = new MorphParse.MorphParse()
+        var res =  parser.parse(morphC)
+        res = res + "\n\n(" + morphC + ")\n\n"
+        res = res + "http://openscriptures.github.io/morphhb/parsing/HebrewMorphologyCodes.html"
+        //console.log(res)
+        morphViewText=res
+
     }
 
     signal newBookSelected(string msg)

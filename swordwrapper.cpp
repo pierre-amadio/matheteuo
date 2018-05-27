@@ -133,12 +133,19 @@ void  swordWrapper::wordInfoRequested(int wordIndex){
     //qDebug()<<cw->rootWord;
     //qDebug()<<curModule;
 
-
     QString strongText=getStrongInfo(curModule,cw);
     QString morphText=getMorphInfo(curModule,cw);
 
-    rootObject->setProperty("strongViewText",strongText);
-    rootObject->setProperty("morphViewText",morphText);
+    if(curModule=="OSHB"){
+        rootObject->setProperty("oshbMorphCode",morphText);
+        rootObject->setProperty("strongViewText",strongText);
+
+    } else {
+        rootObject->setProperty("strongViewText",strongText);
+        rootObject->setProperty("morphViewText",morphText);
+    }
+
+
 
 }
 
