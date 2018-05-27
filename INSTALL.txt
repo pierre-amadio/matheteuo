@@ -42,3 +42,4 @@ git clone https://github.com/pierre-amadio/matheteuo.git
 
 cd matheteuo/
 qmake matheteuo.pro
+make
