@@ -49,4 +49,5 @@ INCLUDEPATH += $$PWD/../../../../../usr/local/sword/include/sword
 DEPENDPATH += $$PWD/../../../../../usr/local/sword/include/sword
 
 DISTFILES += \
-    README
+    README \
+    INSTALL.txt

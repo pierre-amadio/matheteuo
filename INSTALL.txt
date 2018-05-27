@@ -1,0 +1,44 @@
+#First, install the sword library, fonts and some modules:
+
+sudo apt-get -y install libsword-utils libsword-dev fonts-linuxlibertine
+
+#setting environment variable so sword library knows where to store modules:
+cat >> ~/.bashrc <<EOF
+export SWORD_PATH=~/localsword
+EOF
+rm -rf ~/localsword
+mkdir -p ~/localsword/mods.d
+mkdir -p ~/localsword/modules
+
+. ~/.bashrc
+
+#Now, let s install needed modules:
+
+#rm -rf ~/.sword
+installmgr -init
+installmgr -sc
+installmgr -s
+installmgr -r CrossWire
+
+installmgr -ri CrossWire OSHB
+installmgr -ri CrossWire MorphGNT
+installmgr -ri CrossWire Robinson
+installmgr -ri CrossWire StrongsGreek
+installmgr -ri CrossWire StrongsHebrew
+
+#Check it works:
+installmgr -l
+diatheke -b OSHB -o valm -f PLAIN -k Genesis 1:1
+diatheke -b MorphGNT -o av -f PLAIN -k Mark 1:1
+
+#Let's install qt dev stuff (cmake is probably not needed...)
+sudo apt-get install g++ qt5-default qt5-qmake qt5-doc-html cmake qt5-qmltooling-plugins qttools5-dev-tools libqt5webkit5-dev libqt5svg5-dev git
+
+#if you are running ubuntu, install also the following:
+sudo apt-get install qtbase5-dev
+
+#get the sources:
+git clone https://github.com/pierre-amadio/matheteuo.git
+
+cd matheteuo/
+qmake matheteuo.pro
