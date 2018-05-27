@@ -73,7 +73,19 @@ void swordWrapper::moduleNameChangedSlot(const QString &msg) {
 void swordWrapper::bookNameChangedSlot(const QString &curBook) {
     //qDebug()<<"bookNameChangedSlot"<<curBook;
     QObject *rootObject = AppEngine->rootObjects().first();
-    rootObject->setProperty("maxChapter", getChapterMax());
+
+    int oldNbrChapter=rootObject->property("maxChapter").toInt();
+    int newNbrChapter=getChapterMax();
+
+    if(oldNbrChapter==newNbrChapter) {
+        //This can happen when the next selected book has the same
+        //amount of chapter than the previous one.
+        //by example Romans and I Corinthians both have 16 chapters.
+        rootObject->setProperty("maxChapter", -1);
+    }
+
+    rootObject->setProperty("maxChapter", newNbrChapter);
+
 }
 
 void swordWrapper::chapterChangedSlot(int chapterNbr) {
