@@ -1,4 +1,7 @@
 /**
+
+  This files originally comes from https://github.com/openscriptures/morphhb-parsing
+
  * @fileOverview MorphCodes is a summary of Hebrew morphology codes.
  * @version 1.2
  * @author David

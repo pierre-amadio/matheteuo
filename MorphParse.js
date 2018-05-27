@@ -1,4 +1,7 @@
 /**
+
+  This files originally comes from https://github.com/openscriptures/morphhb-parsing
+
  * @fileOverview MorphParse is a parser for morphology codes,
  * based on MorphCodes.js.
  * @version 1.2
