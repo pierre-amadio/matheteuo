@@ -40,6 +40,13 @@ sudo apt-get install qtbase5-dev qml-module-qtquick-controls
 #get the sources:
 git clone https://github.com/pierre-amadio/matheteuo.git
 
+#If you are using a packaged Qt, older than 5.6, you will
+#not be able to use the AA_EnableHighDpiScaling feature.
+#Be sure the following is commented out in main.cpp:
+# 
+# QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#
+
 cd matheteuo/
 qmake matheteuo.pro
 make
