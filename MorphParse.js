@@ -4,6 +4,10 @@
  * @version 1.2
  * @author David
  */
+
+
+Qt.include("MorphCodes.js")
+
 var MorphParse = function()
 {
 	var language;
@@ -21,6 +25,7 @@ var MorphParse = function()
         for (var i = 1; i < parts.length; i++) {
             morph += ', ' + parseCode(parts[i]);
         }
+        console.log("coin: "+morph)
         return morph;
     };
 

@@ -30,6 +30,21 @@ Window {
         //console.log("\n",curTxt)
         verseWindow.font.underline=false
 
+        console.log(morphViewText)
+
+        var morphC=morphViewText.substring(5,morphViewText.length)
+        console.log(morphC)
+        var parser = new MorphParse.MorphParse()
+        var w = new parser.Parse(morphC)
+        //var w= parser.parseCode(morphC)
+        console.log(w)
+         for (var p in w) {
+            console.log(p)
+         }
+        console.log(JSON.stringify(w))
+        console.log(w.toString())
+        morphViewText=w.toString()
+        //console.log(w.toSource())
 
 
     }
@@ -142,7 +157,7 @@ Window {
     signal newVerseSelected(int verse)
     onCurVerseChanged: {
         //console.log("New verse selected",curVerse)
-        newVerseSelected(curVerse)
+        newVerseSelected(curVerse)                
     }
 
     onMaxVerseChanged: {
