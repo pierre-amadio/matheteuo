@@ -321,6 +321,7 @@ Window {
             width:parent.width/2
             height:parent.height
             textFormat: Text.RichText
+            horizontalAlignment: Text.AlignLeft
             readOnly: true
 
             anchors{

@@ -294,13 +294,14 @@ QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
     if(module=="OSHB"){
         //So the strongId should looks like "strong:H07225"
         //and the rootWord like:
+        out="<b>"+src->displayWord+"</b><br>";
         QString q=src->StrongId.mid(8,src->StrongId.length()-8);
         target = library.getModule("StrongsHebrew");
         if (!target) {qDebug()<<"Ooops StrongsHebrew module not found"; }
         target->setKey(q.toStdString().c_str());
         QString tmpRaw=QString(target->renderText());
         tmpRaw.replace("\n","<br>");
-        out=tmpRaw;
+        out.append(tmpRaw);
     }
 
     src->StrongDescription=out;
