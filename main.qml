@@ -13,7 +13,7 @@ Window {
     visible:true
     width: 800;
     height: 440
-    //color: "#00EE00"
+    color: globalBgColor
     //opacity: .9
     onHeightChanged: {
 
@@ -37,6 +37,8 @@ Window {
     property string morphViewText:"le moprh"
 
     property string oshbMorphCode
+
+    property string globalBgColor: "white"
 
     function cleanBookList(){
         var s=bookListView.model.lenght
@@ -260,6 +262,7 @@ Window {
         objectName: "verseView"
         width:rootWindow.width
         height:15*(rootWindow.height-selectVerseRow.height)/30
+        color: globalBgColor
 
         anchors {
             top:selectVerseRow.bottom
@@ -276,6 +279,7 @@ Window {
             id: verseWindow
             textFormat: Text.RichText
             //anchors.fill:parent
+
             anchors {
                 top:verseView.top
                 bottom:verseView.bottom
@@ -286,6 +290,7 @@ Window {
             style: TextAreaStyle {
                 selectedTextColor: "blue"
                 selectionColor: "yellow"
+                backgroundColor: globalBgColor
             }
 
 
@@ -328,6 +333,10 @@ Window {
             horizontalAlignment: Text.AlignLeft
             readOnly: true
 
+            style: TextAreaStyle{
+                backgroundColor: globalBgColor
+            }
+
             anchors{
                 top:parent.top
                 left:parent.left
@@ -349,6 +358,10 @@ Window {
             height:parent.height
             //textFormat: Text.RichText
             readOnly: true
+
+            style: TextAreaStyle{
+                backgroundColor: globalBgColor
+            }
 
 
             anchors{
