@@ -18,6 +18,19 @@
     along with Matheteuo.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/*
+simpleOsiVerseParser is a class that parse a verse in Osis format.
+
+The constructor requires an osisVerse string and a module name.
+Sample osisVerse: (Luke 20:30) for MorphGNT
+
+<w lemma="lemma.Strong:καί strong:G2532" morph="robinson:CONJ" wn="001">καὶ</w> <w lemma="lemma.Strong:ὁ strong:G3588" morph="robinson:T-NSM" wn="002">⸂ὁ</w> <w lemma="lemma.Strong:δεύτερος strong:G1208" morph="robinson:A-NSM" wn="003">δεύτερος⸃</w><milestone type="line"/>
+: <w lemma="lemma.Strong:καί strong:G2532" morph="robinson:CONJ" wn="001">καὶ</w> <w lemma="lemma.Strong:ὁ strong:G3588" morph="robinson:T-NSM" wn="002">⸂ὁ</w> <w lemma="lemma.Strong:δεύτερος strong:G1208" morph="robinson:A-NSM" wn="003">δεύτερος⸃</w><milestone type="line"/>
+
+The instance store a representation of the verse in a QList of verseChunk.
+Each nodes ends up in a new verseChunk so the following variables can be accessed: isXmlTag/fullWord/rootValue/strong/morph
+*/
+
 #ifndef SIMPLEOSISVERSEPARSER_H
 #define SIMPLEOSISVERSEPARSER_H
 #include<QString>

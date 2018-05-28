@@ -69,25 +69,31 @@ int main(int argc, char *argv[])
 
     swordWrapper * mySwordWrapper=new swordWrapper(&engine);
 
-
+    //The user selected a new module (OSHB/MorphGNT)
     QObject::connect(rootObject, SIGNAL(newModuleSelected(QString)),
                      mySwordWrapper, SLOT(moduleNameChangedSlot(QString)));
 
+    //The user selected a new Book (genesis/exodus/...)
     QObject::connect(rootObject,SIGNAL(newBookSelected(QString)),
                      mySwordWrapper, SLOT(bookNameChangedSlot(const QString))
                      );
 
+    //The user selected a new Chapter.
     QObject::connect(rootObject,SIGNAL(newChapterSelected(int)),
                      mySwordWrapper,SLOT(chapterChangedSlot(int))
                      );
+
+    //The user selected a new Verse.
     QObject::connect(rootObject,SIGNAL(newVerseSelected(int)),
                      mySwordWrapper,SLOT(verseChangedSlot(int))
                      );
 
+    //The user requested more information about a word in the current verse.
     QObject::connect(rootObject,SIGNAL(newWordInfoRequested(int)),
                      mySwordWrapper,SLOT(wordInfoRequested(int))
                      );
 
+    //Now that signal are connected to slots, let s fill the menus of the GUI.
     mySwordWrapper->refreshMenus();
 
 

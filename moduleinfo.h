@@ -21,6 +21,13 @@
 #ifndef MODULEINFO_H
 #define MODULEINFO_H
 
+/*
+moduleInfo is a simple class that represent a Sword module.
+name: name of the module.
+lang: lang the verse are stored in.
+type: biblical texts/commentaries/lexicon .... (comes from libsword)
+*/
+
 #include <QObject>
 
 class moduleInfo : public QObject
