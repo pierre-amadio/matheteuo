@@ -39,6 +39,7 @@ Window {
     property string oshbMorphCode
 
     property string globalBgColor: "white"
+    property string globalFontColor: "black"
 
     function cleanBookList(){
         var s=bookListView.model.lenght
@@ -151,6 +152,7 @@ Window {
                     Text{
                     id:moduleNameText
                     font.pixelSize: 16
+                    color: globalFontColor
                     height:selectVerseRow.height/1
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
@@ -182,6 +184,7 @@ Window {
                     id:bookNameDelegate
                     objectName: "bookNameDelegate"
                     font.pixelSize: 16
+                    color: globalFontColor
                     height:selectVerseRow.height/1
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
@@ -211,6 +214,7 @@ Window {
                     Text{
                     id:chapterId
                     font.pixelSize: 16
+                    color: globalFontColor
                     height:selectVerseRow.height/1
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
@@ -239,6 +243,7 @@ Window {
                     Text{
                     id:verseId
                     font.pixelSize: 16
+                    color: globalFontColor
                     height:selectVerseRow.height/1
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
@@ -291,6 +296,7 @@ Window {
                 selectedTextColor: "blue"
                 selectionColor: "yellow"
                 backgroundColor: globalBgColor
+                textColor: globalFontColor
             }
 
 
@@ -335,6 +341,8 @@ Window {
 
             style: TextAreaStyle{
                 backgroundColor: globalBgColor
+                textColor: globalFontColor
+
             }
 
             anchors{
@@ -361,6 +369,8 @@ Window {
 
             style: TextAreaStyle{
                 backgroundColor: globalBgColor
+                textColor: globalFontColor
+
             }
 
 

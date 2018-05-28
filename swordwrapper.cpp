@@ -175,8 +175,9 @@ void swordWrapper::refreshWordInfoListModel(QString vsnt){
 
         if (s.isXmlTag) {
             QString indexSnt=QString::number(cnt);
-            QString tpl="<a href=\"%1\" style=\" color:#000; text-decoration:none;\" >%2</a>";
-            QString htmlBlob=QString (tpl).arg(indexSnt,s.fullWord);
+            QString globalFontColor=rootObject->property("globalFontColor").toString();
+            QString tpl="<a href=\"%1\" style=\" color:%2; text-decoration:none;\" >%3</a>";
+            QString htmlBlob=QString (tpl).arg(indexSnt,globalFontColor,s.fullWord);
             htmlText.append(htmlBlob);
             cwi->setDisplayWord(s.fullWord);
             cwi->rootWord=s.rootValue;
