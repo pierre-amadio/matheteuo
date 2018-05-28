@@ -279,7 +279,8 @@ QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
         //And the rootWord something like "lemma.Strong:βίβλος"
         out="<b>";
         out.append(src->rootWord.mid(13,src->rootWord.length()-13));
-        out.append("</b>");
+        out.append("</b><br>");
+        if(src->StrongId.length()){
         QString q=src->StrongId.mid(8,src->StrongId.length()-8);
         target = library.getModule("StrongsGreek");
         if (!target) {qDebug()<<"Ooops StrongsGreek module not found"; }
@@ -287,6 +288,7 @@ QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
         QString tmpRaw=QString(target->renderText());
         tmpRaw.replace("\n","<br>");
         out.append(tmpRaw);
+        }
     }
 
     if(module=="OSHB"){
