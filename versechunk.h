@@ -21,7 +21,12 @@
 #ifndef VERSECHUNK_H
 #define VERSECHUNK_H
 #include<QString>
-
+/*
+A class (well, it could have been a simple structure)
+storing the content of an OSIS node.
+isXmlTag is a flag set to true if the node has some extra information
+such as Strong id or morphological informations.
+*/
 class verseChunk
 {
 public:

@@ -18,6 +18,12 @@
     along with Matheteuo.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/*
+swordWrapper is the actual backend engine of matheteuo.
+It receive signals from the qml gui, makes request to the sword library
+and set back the correct qml property and models based on those sword data.
+*/
+
 #ifndef SWORDWRAPPER_H
 #define SWORDWRAPPER_H
 

@@ -20,7 +20,10 @@
 #ifndef WORDINFO_H
 #define WORDINFO_H
 #include <QString>
-
+/*
+wordInfo is a class representing a word in an OSIS verse.
+the qml model used in the verseView is a list of such objects.
+*/
 class wordInfo
 {
 
@@ -29,14 +32,20 @@ public:
 
     QString getDisplayWord() const;
     void setDisplayWord(const QString cn);
-
-
+    //the word as shown in the verse. (εὐαγγελίου)
     QString displayWord;
+    //is there juicy information such as morph code
+    //or strong id ?
     bool hasInfo;
+    //the actual root of the word (εὐαγγέλιον)
     QString rootWord;
+    //raw morphCode
     QString morphCode;
+    //morph Code fit for being displayed to the user.
     QString morphDesciption;
+    //raw strong id
     QString StrongId;
+    //strong dictionnary entry fit for being displayed to user.
     QString StrongDescription;
 
 };
