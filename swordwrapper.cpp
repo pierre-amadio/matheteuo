@@ -322,7 +322,11 @@ QString swordWrapper::getMorphInfo(QString module, wordInfo * src){
     }
 
     if(module=="OSHB") {
-        out=QString(src->morphCode);
+        if(src->morphCode.left(5)=="oshm:") {
+            out=QString(src->morphCode);
+        } else {
+            out="";
+        }
     }
     return out;
 }

@@ -82,7 +82,11 @@ Window {
         var res =  parser.parse(morphC)
         res = res + "\n\n(" + morphC + ")\n\n"
         res = res + "http://openscriptures.github.io/morphhb/parsing/HebrewMorphologyCodes.html"
-        morphViewText=res
+        if(oshbMorphCode.length) {
+            morphViewText=res
+        } else {
+            morphViewText=""
+        }
     }
 
     signal newBookSelected(string msg)
