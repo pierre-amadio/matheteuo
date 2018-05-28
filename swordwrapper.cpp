@@ -33,23 +33,27 @@
 
 using namespace::sword;
 
-
+//no arg constructor.Do not use...
 swordWrapper::swordWrapper(QObject *parent) : QObject(parent)
 {
     qDebug()<<"New wrapper should not be called without an engine";
 }
 
+//constructor with the qml engine as argument.
 swordWrapper::swordWrapper(QQmlApplicationEngine *myEngine, QObject *parent): QObject(parent)
 {
     AppEngine=myEngine;
 }
 
+//let s fill menus so we have a selection
+//when the application start.
 void swordWrapper::refreshMenus(){
     refreshModuleListModel(moduleListModel);
     QQmlContext *rootContext = AppEngine->rootContext();
     rootContext->setContextProperty("curModuleModel", QVariant::fromValue(moduleListModel));
 }
 
+//something changed the curModuleName property in qml.
 void swordWrapper::moduleNameChangedSlot(const QString &msg) {
     QQmlContext *rootContext = AppEngine->rootContext();
     bookListModel.clear();
@@ -59,6 +63,7 @@ void swordWrapper::moduleNameChangedSlot(const QString &msg) {
     rootContext->setContextProperty("curBookModel",QVariant::fromValue(bookListModel));
 }
 
+//something changed the curBookName property in qml.
 void swordWrapper::bookNameChangedSlot(const QString &curBook) {
     QObject *rootObject = AppEngine->rootObjects().first();
 
@@ -74,6 +79,7 @@ void swordWrapper::bookNameChangedSlot(const QString &curBook) {
     rootObject->setProperty("maxChapter", newNbrChapter);
 }
 
+//something changed the curChapter in qml.
 void swordWrapper::chapterChangedSlot(int chapterNbr) {
     QObject *rootObject = AppEngine->rootObjects().first();
 
@@ -87,6 +93,7 @@ void swordWrapper::chapterChangedSlot(int chapterNbr) {
     rootObject->setProperty("maxVerse", newVerseMax);
 }
 
+//something changed the curVerse in qml.
 void swordWrapper::verseChangedSlot(int verseNbr){
     QObject *rootObject = AppEngine->rootObjects().first();
     QString module=rootObject->property("curModuleName").toString();
@@ -99,6 +106,7 @@ void swordWrapper::verseChangedSlot(int verseNbr){
     rootObject->setProperty("morphViewText","");
 }
 
+//the user clicked on a word to request strong lexicon & morph informations.
 void  swordWrapper::wordInfoRequested(int wordIndex){
     QObject *rootObject = AppEngine->rootObjects().first();
     QString curModule=rootObject->property("curModuleName").toString();
@@ -114,6 +122,7 @@ void  swordWrapper::wordInfoRequested(int wordIndex){
     }
 }
 
+//return a list of book name available i n moduleName module.
 QStringList swordWrapper::getBookList(const QString &moduleName){
     QList<QString> output;
 
@@ -133,8 +142,8 @@ QStringList swordWrapper::getBookList(const QString &moduleName){
 
 }
 
-
-
+//prepare the model of existing modules usable in the GUI
+//currently, only OSHB and MorphGNT are supported.
 void swordWrapper::refreshModuleListModel(QList<QObject*> &model){
     qDeleteAll(model.begin(), model.end());
     model.clear();
@@ -159,6 +168,18 @@ void swordWrapper::refreshModuleListModel(QList<QObject*> &model){
     }
 }
 
+/*
+ Prepare the 2 models used to display the verse in the verseView.
+
+  - wordInfoListModel:  a QList of pointer to wordInfo instances maching
+  the verse being displayed.
+
+  - mainTextModel:  the actual model for the VerseView TextArea.
+    this is html and each words with information is a html  link
+    with information about the index of this word in the wordInfoListModel list.
+
+
+*/
 void swordWrapper::refreshWordInfoListModel(QString vsnt){
     qDeleteAll(wordInfoListModel.begin(),wordInfoListModel.end());
     wordInfoListModel.clear();
@@ -202,7 +223,6 @@ void swordWrapper::refreshWordInfoListModel(QString vsnt){
 }
 
 QList<QObject*> swordWrapper::getModuleListModel(){
-
     return moduleListModel;
 }
 
@@ -214,6 +234,7 @@ QStringList swordWrapper::getBookListModel(){
     return bookListModel;
 }
 
+//return how many chapter is there for the current book in the current module.
 int swordWrapper::getChapterMax(){
     QObject *rootObject = AppEngine->rootObjects().first();
     QString curModule=rootObject->property("curModuleName").toString();
@@ -228,6 +249,7 @@ int swordWrapper::getChapterMax(){
     return vk->getChapterMax();
 }
 
+//return how many verse are in the current chapter of the current book in the current module.
 int swordWrapper::getVerseMax(){
     QObject *rootObject = AppEngine->rootObjects().first();
     QString curModule=rootObject->property("curModuleName").toString();
@@ -245,6 +267,11 @@ int swordWrapper::getVerseMax(){
 
 }
 
+
+/*
+ Return the verse content for this module/book/chapter/verse according to
+ the sword library with accents/cantillation/morph info/strong info in OSIS  format.
+*/
 QString swordWrapper::getVerse(QString module, QString book ,int chapter, int verse){
     QString out="not done";
     SWMgr library(new MarkupFilterMgr(FMT_OSIS));
@@ -271,6 +298,10 @@ QString swordWrapper::getVerse(QString module, QString book ,int chapter, int ve
     return out;
 }
 
+/*
+ Set (and return) the strong's lexicon entry for a given src wordInfo.
+ This is in html format.
+*/
 QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
     QString out="none";
     SWMgr library(new MarkupFilterMgr(FMT_HTML));
@@ -282,13 +313,13 @@ QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
         out.append(src->rootWord.mid(13,src->rootWord.length()-13));
         out.append("</b><br>");
         if(src->StrongId.length()){
-        QString q=src->StrongId.mid(8,src->StrongId.length()-8);
-        target = library.getModule("StrongsGreek");
-        if (!target) {qDebug()<<"Ooops StrongsGreek module not found"; }
-        target->setKey(q.toStdString().c_str());
-        QString tmpRaw=QString(target->renderText());
-        tmpRaw.replace("\n","<br>");
-        out.append(tmpRaw);
+            QString q=src->StrongId.mid(8,src->StrongId.length()-8);
+            target = library.getModule("StrongsGreek");
+            if (!target) {qDebug()<<"Ooops StrongsGreek module not found"; }
+            target->setKey(q.toStdString().c_str());
+            QString tmpRaw=QString(target->renderText());
+            tmpRaw.replace("\n","<br>");
+            out.append(tmpRaw);
         }
     }
 
@@ -310,6 +341,9 @@ QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
 
 }
 
+/*
+ Set (and return) the morphological description of a given src wordInfo.
+*/
 QString swordWrapper::getMorphInfo(QString module, wordInfo * src){
     QString out="non";
     SWMgr library(new MarkupFilterMgr(FMT_PLAIN));
@@ -329,5 +363,6 @@ QString swordWrapper::getMorphInfo(QString module, wordInfo * src){
             out="";
         }
     }
+    src->morphDesciption=out;
     return out;
 }

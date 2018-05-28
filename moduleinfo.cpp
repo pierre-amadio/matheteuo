@@ -30,6 +30,8 @@ QString  moduleInfo::getName() const {
     return moduleName;
 }
 
+//I think this will never  be used
+//as the user has no write access to anything anyway.
 void moduleInfo::setName(const QString name) {
     if(moduleName!=name){
         moduleName=name;

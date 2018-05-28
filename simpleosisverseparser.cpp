@@ -142,6 +142,4 @@ simpleOsisVerseParser::simpleOsisVerseParser(QString verse, QString curModule)
 
 QList<verseChunk> simpleOsisVerseParser::getVerselist(){
     return this->verseChunkList;
-
-
 }
