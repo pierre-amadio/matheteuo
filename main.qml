@@ -16,40 +16,10 @@ Window {
     //color: "#00EE00"
     //opacity: .9
     onHeightChanged: {
-        //console.log("curModuleName",curModuleName)
-        //console.log("currBookName",curBookName)
-        //console.log("curChapter",curChapter)
-        //console.log("curVerse", curVerse)
-        //cleanBookList()
-        var start=verseWindow.selectionStart
-        var end=verseWindow.selectionEnd
-        var curTxt=verseWindow.getText(start,end)
-        //console.log("begin at",start)
-        //console.log(verseWindow.selectedText)
-        //console.log("end at",end)
-        //console.log("\n",curTxt)
-        //verseWindow.font.underline=false
-
-        //console.log(morphViewText)
-        //var morphC=morphViewText.substring(5,morphViewText.length)
-        //console.log(morphC)
-        //var parser = new MorphParse.MorphParse()
-        //var w =  parser.parse(morphC)
-        //var w= parser.parseCode(morphC)
-        //console.log(w)
-        // for (var p in w) {
-        //    console.log(p)
-        // }
-        //console.log(JSON.stringify(w))
-        //console.log(w.toString())
-        //morphViewText=w.toString()
-        //console.log(w.toSource())
-
 
     }
 
-    //onHeightChanged: console.log("max chapter",maxChapter)
-    title:qsTr("Sword Reader")
+    title:"μαθητεύω"
 
     property string curModuleName: "none yet"
     property string curModuleLang: "none yet"
@@ -69,30 +39,14 @@ Window {
     property string oshbMorphCode
 
     function cleanBookList(){
-        console.log("Cleaning book list")
-        //curBookModel=new Array (0)
-        //curBookModel="none yet"
-        //bookListView.model=new Array(0)
         var s=bookListView.model.lenght
         var m=bookListView.model
-        //console.log(m[70])
-        //for(var i=0;i<70;i++) {
-        //    if (m[i]!==undefined){
-        //        console.log(m[i])
-        //    }
-        //}
         while(m[0]!==undefined){
-            console.log(m[0])
             m.pull(0)
         }
-
-        //console.log(bookListView.model.count)
-        //newModuleSelected(curModuleName)
-
     }
 
     function fillChapterList(nbr){
-        //console.log("let's fill stuff:",nbr)
         chapterListModel=[]
         var tmpArray = new Array (0)
         for (var i = 1; i <= nbr; i++){
@@ -104,7 +58,6 @@ Window {
     }
 
     function fillVerseList(nbr){
-        //console.log("let's fill VerseList:",nbr)
         verseListModel=[]
         var tmpArray = new Array (0)
         for (var i = 1; i <= nbr; i++){
@@ -113,7 +66,6 @@ Window {
         verseListModel=tmpArray
         singleVerseView.currentIndex=0
         newVerseSelected(verseListModel[singleVerseView.currentIndex])
-
     }
 
 
@@ -121,61 +73,39 @@ Window {
     signal newWordInfoRequested(int wordIndex)
 
     onCurModuleNameChanged: {
-        console.log("New module selected",curModuleName)
-        //console.log(curBookModel)
-        //curBookModel=new Array (0)
-        //bookListView.model=curBookModel
-
-        //curBookModel=tmpArray
-        //bookListView.model=tmpArray
-        //console.log("tmp array",tmpArray)
-        //console.log("curbookModel is now ",curBookModel)
-
-        //chapterListModel=[]
-
         newModuleSelected(curModuleName)
     }
 
     onOshbMorphCodeChanged: {
-        //var morphC=morphViewText.substring(5,morphViewText.length)
-        //console.log("oshbMorphCode",oshbMorphCode)
         var morphC=oshbMorphCode.substring(5,oshbMorphCode.length)
-        //console.log("morphC=",morphC)
         var parser = new MorphParse.MorphParse()
         var res =  parser.parse(morphC)
         res = res + "\n\n(" + morphC + ")\n\n"
         res = res + "http://openscriptures.github.io/morphhb/parsing/HebrewMorphologyCodes.html"
-        //console.log(res)
         morphViewText=res
-
     }
 
     signal newBookSelected(string msg)
     onCurBookNameChanged: {
-        console.log("New book selected",curBookName)
         newBookSelected(curBookName)
     }
 
     signal newChapterSelected(int chapter)
     onCurChapterChanged: {
-        //console.log("New chapter selected",curChapter)
         newChapterSelected(curChapter)
     }
 
 
     onMaxChapterChanged: {
-        console.log("mach chapter changed",maxChapter)
         fillChapterList(maxChapter)
     }
 
     signal newVerseSelected(int verse)
     onCurVerseChanged: {
-        //console.log("New verse selected",curVerse)
-        newVerseSelected(curVerse)                
+        newVerseSelected(curVerse)
     }
 
     onMaxVerseChanged: {
-        console.log("max verse changed",maxVerse)
         fillVerseList(maxVerse)
     }
 
@@ -326,11 +256,6 @@ Window {
         objectName: "verseView"
         width:rootWindow.width
         height:15*(rootWindow.height-selectVerseRow.height)/30
-        //height:275
-        //opacity: .4
-        //anchors.bottom: parent.bottom
-        //anchors.top:selectVerseRow.bottom
-
 
         anchors {
             top:selectVerseRow.bottom
@@ -354,12 +279,7 @@ Window {
                 right:verseView.right
             }
 
-
-
-
             style: TextAreaStyle {
-                //backgroundColor: "black"
-                //textColor: "white"
                 selectedTextColor: "blue"
                 selectionColor: "yellow"
             }
@@ -370,20 +290,13 @@ Window {
                 //family: "Ezra SIL"
                 family: "Linux Libertine O"
                 pixelSize: 40
-                //underline: false
             }
             wrapMode: Text.WordWrap
             text:mainTextModel
 
             onLinkActivated:{
-                //console.log("cliketi:"+link)
-                 newWordInfoRequested(parseInt(link))
+                newWordInfoRequested(parseInt(link))
             }
-
-            onLinkHovered: {
-                //console.log("what to do with:"+link)
-            }
-
 
 
         }
@@ -393,10 +306,7 @@ Window {
     Rectangle {
         id:grammarView
         width:parent.width
-        //opacity: .5
-        //height:2*(rootWindow.height-selectVerseRow.height)/10
         height:15*(rootWindow.height-selectVerseRow.height)/30
-        //color:"yellow"
 
         anchors {
             top:verseView.bottom
@@ -416,7 +326,6 @@ Window {
             anchors{
                 top:parent.top
                 left:parent.left
-                //right:morphView.left
                 bottom: parent.bottom
             }
 
@@ -424,7 +333,6 @@ Window {
                 //family: "Ezra SIL"
                 family: "Linux Libertine O"
                 pixelSize: 20
-                //underline: false
             }
 
             text:strongViewText
@@ -433,7 +341,6 @@ Window {
 
         TextArea {
             id: morphView
-            //width:parent.width/2
             height:parent.height
             //textFormat: Text.RichText
             readOnly: true
@@ -450,16 +357,11 @@ Window {
                 //family: "Ezra SIL"
                 family: "Linux Libertine O"
                 pixelSize: 20
-                //underline: false
             }
-
 
             text:morphViewText
         }
 
-
     }
 
 }
-
-

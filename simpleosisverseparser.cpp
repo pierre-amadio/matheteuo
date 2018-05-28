@@ -60,7 +60,6 @@ simpleOsisVerseParser::simpleOsisVerseParser(QString verse, QString curModule)
 
 
     foreach( QString curWord, wordList ) {
-        // bool isXml=false;
         QString tmpWord=curWord;
 
         verseChunk tmpChunk;
@@ -105,9 +104,6 @@ simpleOsisVerseParser::simpleOsisVerseParser(QString verse, QString curModule)
                         qDebug()<<"unknown attributeName"<<attributeName;
                     }
                 } else if(curModule=="OSHB") {
-
-                    //qDebug()<<"AttributeName"<<attributeName;
-                    //qDebug()<<"curWord "<<curWord.toUtf8();
                     if(attributeName=="lemma") {
                         tmpStrong=xmlTag.getAttribute("lemma",0,' ');
                     } else if (attributeName=="morph") {
@@ -117,7 +113,6 @@ simpleOsisVerseParser::simpleOsisVerseParser(QString verse, QString curModule)
                     } else {
                         qDebug()<<"unknown attributeName"<<attributeName;
                     }
-
 
                 } else {
                     qDebug()<<"Unkown module:"<<curModule;

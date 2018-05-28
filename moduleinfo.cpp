@@ -27,14 +27,10 @@ moduleInfo::moduleInfo(QObject *parent)
 
 
 QString  moduleInfo::getName() const {
-    //return "coin";
-    //qDebug()<<"moduleInfo::getName";
     return moduleName;
 }
 
 void moduleInfo::setName(const QString name) {
-    //qDebug()<<"moduleInfo::setName";
-
     if(moduleName!=name){
         moduleName=name;
         emit notifyName();

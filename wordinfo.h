@@ -39,8 +39,6 @@ public:
     QString StrongId;
     QString StrongDescription;
 
-
-
 };
 
 #endif // WORDINFO_H

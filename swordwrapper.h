@@ -53,8 +53,6 @@ private:
     QQmlApplicationEngine * AppEngine;
     QString getStrongInfo(QString module, wordInfo * src);
     QString getMorphInfo(QString module, wordInfo * src);
-    //QQmlContext *rootContext
-    //int testString;
 
 signals:
     void maxChapterChanged(int nbrChapter);

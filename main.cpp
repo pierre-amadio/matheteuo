@@ -55,8 +55,8 @@ https://github.com/openscriptures/morphhb-parsing
 int main(int argc, char *argv[])
 {
 
-// The following requires at least Qt 5.6:
-//    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    // The following requires at least Qt 5.6:
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
 
@@ -85,8 +85,8 @@ int main(int argc, char *argv[])
                      );
 
     QObject::connect(rootObject,SIGNAL(newWordInfoRequested(int)),
-                      mySwordWrapper,SLOT(wordInfoRequested(int))
-                      );
+                     mySwordWrapper,SLOT(wordInfoRequested(int))
+                     );
 
     mySwordWrapper->refreshMenus();
 

@@ -22,7 +22,6 @@
 
 wordInfo::wordInfo()
 {
-    //qDebug()<<"A new wordInfo";
 }
 
 QString wordInfo::getDisplayWord() const{

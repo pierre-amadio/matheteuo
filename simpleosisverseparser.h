@@ -31,7 +31,6 @@ public:
     QList<verseChunk> getVerselist();
 
 private:
-    //QString osisVerse;
     QList<verseChunk> verseChunkList;
 };
 
