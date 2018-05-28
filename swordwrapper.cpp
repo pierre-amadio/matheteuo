@@ -172,11 +172,14 @@ void swordWrapper::refreshModuleListModel(QList<QObject*> &model){
  Prepare the 2 models used to display the verse in the verseView.
 
   - wordInfoListModel:  a QList of pointer to wordInfo instances maching
-  the verse being displayed.
+  the verse being displayed. This variable is kept on the backend side.
+  The qml side only knows about the mainTextModel.
 
   - mainTextModel:  the actual model for the VerseView TextArea.
-    this is html and each words with information is a html  link
-    with information about the index of this word in the wordInfoListModel list.
+    this is in html. Each words with information is a link with
+    information about the index of this word in the wordInfoListModel list.
+    When the user click on a word, this url is used to get the right word
+    in the wordInfoListModel.
 
 
 */

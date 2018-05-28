@@ -3,6 +3,10 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
+/*
+  Javascript magic to parse OSHB morphological code.
+  This comes from https://github.com/openscriptures/morphhb-parsing
+*/
 import "MorphParse.js" as MorphParse
 import "MorphCodes.js" as MorphCodes
 
@@ -36,6 +40,14 @@ Window {
     property string strongViewText:"le strong"
     property string morphViewText:"le moprh"
 
+    /*
+      There is no sword module yet to get OSHB morphological code informations.
+      However, there is a simple javascript class that generate a human readable
+      description based on a OSHB morphological code.
+      So the c++ back engine store the actual OSHB morph code in this property
+      wich is then used by javascript magic to fill the morphView when dealing
+      with OSHB module.
+    */
     property string oshbMorphCode
 
     property string globalBgColor: "white"
@@ -116,7 +128,7 @@ Window {
         fillVerseList(maxVerse)
     }
 
-
+    //The horizontal verse selection widgets.
     Row {
         objectName: "selectVerseRow"
         id: selectVerseRow
@@ -261,7 +273,7 @@ Window {
     }
 
 
-
+    //Where the current verse is being displayed.
     Rectangle {
         id: verseView
         objectName: "verseView"
@@ -318,6 +330,7 @@ Window {
 
     }
 
+    //Below the verseView, strong and morphological infos.
     Rectangle {
         id:grammarView
         width:parent.width
