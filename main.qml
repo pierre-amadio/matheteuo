@@ -338,11 +338,6 @@ Window {
 
             readOnly: true
             font {
-                //family: "Ezra SIL"
-                //sudo apt-get install fonts-gfs-bodoni-classic
-                //family:"GFS BodoniClassic"
-                //family: "GFS Didot"
-                //family: "Linux Libertine O"
                 family: curVerseFont
                 pixelSize: curVersePixelSize
             }
