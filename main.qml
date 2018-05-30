@@ -41,6 +41,19 @@ Window {
     property string morphViewText:"le moprh"
 
     /*
+     Some fonts looks better than others.
+
+     I like the following:
+                hebrew:  "Ezra SIL"
+                greek: "Linux Libertine O"
+    */
+    property string favGreekFont: "Linux Libertine O"
+    property string favHebrewFont: "Ezra SIL"
+    property string curVerseFont
+    property int curVersePixelSize
+
+
+    /*
       There is no sword module yet to get OSHB morphological code informations.
       However, there is a simple javascript class that generate a human readable
       description based on a OSHB morphological code.
@@ -89,6 +102,17 @@ Window {
 
     onCurModuleNameChanged: {
         newModuleSelected(curModuleName)
+    }
+
+    onCurModuleLangChanged: {
+        if(curModuleLang=="grc") {
+            curVerseFont=favGreekFont
+            curVersePixelSize=42
+        }
+        if(curModuleLang=="he") {
+            curVerseFont=favHebrewFont
+            curVersePixelSize=30
+        }
     }
 
     onOshbMorphCodeChanged: {
@@ -315,8 +339,12 @@ Window {
             readOnly: true
             font {
                 //family: "Ezra SIL"
-                family: "Linux Libertine O"
-                pixelSize: 40
+                //sudo apt-get install fonts-gfs-bodoni-classic
+                //family:"GFS BodoniClassic"
+                //family: "GFS Didot"
+                //family: "Linux Libertine O"
+                family: curVerseFont
+                pixelSize: curVersePixelSize
             }
             wrapMode: Text.WordWrap
             text:mainTextModel
@@ -365,9 +393,8 @@ Window {
             }
 
             font {
-                //family: "Ezra SIL"
-                family: "Linux Libertine O"
-                pixelSize: 20
+                family: curVerseFont
+                pixelSize: curVersePixelSize/3
             }
 
             text:strongViewText
@@ -395,9 +422,8 @@ Window {
             }
 
             font {
-                //family: "Ezra SIL"
-                family: "Linux Libertine O"
-                pixelSize: 20
+                family: curVerseFont
+                pixelSize: curVersePixelSize/3
             }
 
             text:morphViewText

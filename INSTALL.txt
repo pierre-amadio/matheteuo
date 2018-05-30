@@ -1,8 +1,8 @@
 #First, install the sword library, fonts and some modules:
 
-sudo apt-get -y install libsword-utils libsword-dev fonts-linuxlibertine
+sudo apt-get -y install libsword-utils libsword-dev fonts-linuxlibertine fonts-sil-ezra
 
-#On fedora:
+#On fedora: (TODO: find name of the sil ezra font)
 sudo dnf install sword sword-devel sword-utils linux-libertine-fonts
 
 #setting environment variable so sword library knows where to store modules:
