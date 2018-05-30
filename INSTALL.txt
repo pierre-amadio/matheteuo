@@ -1,8 +1,24 @@
 #First, install the sword library, fonts and some modules:
 
+#debian based:
 sudo apt-get -y install libsword-utils libsword-dev fonts-linuxlibertine fonts-sil-ezra
 
-#On fedora: (TODO: find name of the sil ezra font)
+#The ezra SIL  fonts do not seems to be packaged  Fedora: 
+#You can either set favHebrewFont in main.qml to use another font (such as "Linux Libertine O" as the greek one).
+#Or, you  can install the ezra SIL font manually:
+#https://fedoraproject.org/wiki/SIL_Ezra_fonts
+
+wget -O EzraSIL251.zip  "http://scripts.sil.org/cms/scripts/render_download.php?format=file&media_id=EzraSIL251.zip&filename=EzraSIL251.zip"
+unzip EzraSIL251.zip 
+mkdir ~/.fonts
+cp EzraSIL2.51/*ttf ~/.fonts/
+fc-cache -v
+
+#The hebrew rendering of "Linux Libertine O" is fine, but when a letter
+#has 2 masoretic mark (let say, an atnach and a qametz as in Amos 7:1)
+#things gets much more easy to read with ezra SIL.
+
+#fedora based:
 sudo dnf install sword sword-devel sword-utils linux-libertine-fonts
 
 #setting environment variable so sword library knows where to store modules:
@@ -35,6 +51,8 @@ diatheke -b OSHB -o valm -f PLAIN -k Genesis 1:1
 diatheke -b MorphGNT -o av -f PLAIN -k Mark 1:1
 
 #Let's install qt dev stuff (cmake is probably not needed...)
+
+#On debian:
 sudo apt-get install g++ qt5-default qt5-qmake qt5-doc-html cmake qt5-qmltooling-plugins qttools5-dev-tools libqt5webkit5-dev libqt5svg5-dev qml-module-qtquick2 qml-module-qtquick-controls git
 
 #On fedora:
