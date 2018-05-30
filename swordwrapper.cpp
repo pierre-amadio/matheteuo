@@ -143,7 +143,7 @@ QStringList swordWrapper::getBookList(const QString &moduleName){
 }
 
 //prepare the model of existing modules usable in the GUI
-//currently, only OSHB and MorphGNT are supported.
+//currently, only OSHB,MorphGNT and LXX are supported.
 void swordWrapper::refreshModuleListModel(QList<QObject*> &model){
     qDeleteAll(model.begin(), model.end());
     model.clear();
@@ -160,7 +160,7 @@ void swordWrapper::refreshModuleListModel(QList<QObject*> &model){
             curMod=new moduleInfo();
             curMod->setName(swordModule->getName());
             //Let s deal only with module with embedded grammar data.
-            if(curMod->getName()!="MorphGNT" && curMod->getName()!="OSHB") {continue;}
+            if(curMod->getName()!="MorphGNT" && curMod->getName()!="OSHB"  && curMod->getName()!="LXX") {continue;}
             curMod->setLang(swordModule->getLanguage());
             curMod->setType(swordModule->getType());
             model.append(curMod);
@@ -339,6 +339,22 @@ QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
         out.append(tmpRaw);
     }
 
+    if(module=="LXX") {
+        //So the strongId shouldlooks like "strong:G2316"
+        if(src->StrongId.length()){
+            out="<b>";
+            out.append(src->displayWord);
+            out.append("</b><br>");
+            QString q=src->StrongId.mid(8,src->StrongId.length()-8);
+            target = library.getModule("StrongsGreek");
+            if (!target) {qDebug()<<"Ooops StrongsGreek module not found"; }
+            target->setKey(q.toStdString().c_str());
+            QString tmpRaw=QString(target->renderText());
+            tmpRaw.replace("\n","<br>");
+            out.append(tmpRaw);
+        }
+    }
+
     src->StrongDescription=out;
     return out;
 
@@ -354,7 +370,7 @@ QString swordWrapper::getMorphInfo(QString module, wordInfo * src){
     if(module=="MorphGNT") {
         QString q=src->morphCode.mid(9,src->morphCode.length()-9);
         target = library.getModule("Robinson");
-        if (!target) {qDebug()<<"Ooops Robinson strong module not found"; }
+        if (!target) {qDebug()<<"Ooops Robinson morphological module not found"; }
         target->setKey(q.toStdString().c_str());
         out=target->renderText();
     }
@@ -366,6 +382,15 @@ QString swordWrapper::getMorphInfo(QString module, wordInfo * src){
             out="";
         }
     }
+
+    if(module=="LXX") {
+       QString q=src->morphCode.mid(8,src->morphCode.length()-8);
+        target = library.getModule("Packard");
+        if (!target) {qDebug()<<"Ooops Packard morphological module not found"; }
+        target->setKey(q.toStdString().c_str());
+        out=target->renderText();
+    }
+
     src->morphDesciption=out;
     return out;
 }

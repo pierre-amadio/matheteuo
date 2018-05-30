@@ -41,7 +41,9 @@ installmgr -r CrossWire
 
 installmgr -ri CrossWire OSHB
 installmgr -ri CrossWire MorphGNT
+installmgr -ri CrossWire LXX
 installmgr -ri CrossWire Robinson
+installmgr -ri CrossWire Packard
 installmgr -ri CrossWire StrongsGreek
 installmgr -ri CrossWire StrongsHebrew
 

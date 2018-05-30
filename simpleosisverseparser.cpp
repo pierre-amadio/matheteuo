@@ -34,7 +34,6 @@ simpleOsisVerseParser::simpleOsisVerseParser(QString verse, QString curModule)
     int maxLenght=verse.length();
     QString newWord("");
 
-
     for(int n=0;n<maxLenght;n++){
 
         if(n>1 && verse.mid(n-2,2)=="<w") {
@@ -114,10 +113,18 @@ simpleOsisVerseParser::simpleOsisVerseParser(QString verse, QString curModule)
                         qDebug()<<"unknown attributeName"<<attributeName;
                     }
 
-                } else {
+                }  else if(curModule=="LXX"){
+                    if(attributeName=="lemma"){
+                        tmpStrong=xmlTag.getAttribute("lemma",0,' ');
+                    } else if(attributeName=="morph"){
+                        tmpMorph=xmlTag.getAttribute("morph",0,' ');
+                    } else {
+                        qDebug()<<"unknown attribue:"<<attributeName;
+                    }
+
+                }else {
                     qDebug()<<"Unkown module:"<<curModule;
                 }
-
             }
 
             tmpChunk.fullWord=tmpFullWord;
