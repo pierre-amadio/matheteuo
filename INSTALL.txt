@@ -39,11 +39,26 @@ installmgr -sc
 installmgr -s
 installmgr -r CrossWire
 
+#Bible texts
+
+#Open Scriptue Hebrew Bible
 installmgr -ri CrossWire OSHB
+
+#Greek new testament.
 installmgr -ri CrossWire MorphGNT
+
+#Septuagint (greek old testament).
 installmgr -ri CrossWire LXX
+
+#Morphological repositories
+
+#Needed if you installed MorphGNT
 installmgr -ri CrossWire Robinson
+
+#Needed if you installed LXX
 installmgr -ri CrossWire Packard
+
+#Strong's dictionnary
 installmgr -ri CrossWire StrongsGreek
 installmgr -ri CrossWire StrongsHebrew
 
