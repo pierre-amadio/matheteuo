@@ -346,12 +346,19 @@ QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
             out.append(src->displayWord);
             out.append("</b><br>");
             QString q=src->StrongId.mid(8,src->StrongId.length()-8);
-            target = library.getModule("StrongsGreek");
-            if (!target) {qDebug()<<"Ooops StrongsGreek module not found"; }
-            target->setKey(q.toStdString().c_str());
-            QString tmpRaw=QString(target->renderText());
-            tmpRaw.replace("\n","<br>");
-            out.append(tmpRaw);
+            if(q.toInt()==0){
+                //For some strange reason, some strong entry are wrong.
+                //By example Gen 1:2
+                //<w  savlm="strong:GA-NSM">ακατασκευαστος</w>
+                out="";
+            } else {
+                target = library.getModule("StrongsGreek");
+                if (!target) {qDebug()<<"Ooops StrongsGreek module not found"; }
+                target->setKey(q.toStdString().c_str());
+                QString tmpRaw=QString(target->renderText());
+                tmpRaw.replace("\n","<br>");
+                out.append(tmpRaw);
+            }
         }
     }
 
@@ -384,7 +391,7 @@ QString swordWrapper::getMorphInfo(QString module, wordInfo * src){
     }
 
     if(module=="LXX") {
-       QString q=src->morphCode.mid(8,src->morphCode.length()-8);
+        QString q=src->morphCode.mid(8,src->morphCode.length()-8);
         target = library.getModule("Packard");
         if (!target) {qDebug()<<"Ooops Packard morphological module not found"; }
         target->setKey(q.toStdString().c_str());
