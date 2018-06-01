@@ -1,12 +1,12 @@
-/**
+/*
 
-  This files originally comes from https://github.com/openscriptures/morphhb-parsing
+  This file originally comes from  the  Open Scriptures Hebrew Bible Project
+  http://openscriptures.github.io/morphhb/
 
- * @fileOverview MorphParse is a parser for morphology codes,
- * based on MorphCodes.js.
- * @version 1.2
- * @author David
- */
+  file came from this repository:
+  https://github.com/openscriptures/morphhb-parsing
+
+*/
 
 
 Qt.include("MorphCodes.js")

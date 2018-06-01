@@ -1,11 +1,12 @@
-/**
+/*
 
-  This files originally comes from https://github.com/openscriptures/morphhb-parsing
+  This file originally comes from  the  Open Scriptures Hebrew Bible Project
+  http://openscriptures.github.io/morphhb/
 
- * @fileOverview MorphCodes is a summary of Hebrew morphology codes.
- * @version 1.2
- * @author David
- */
+  file came from this repository:
+  https://github.com/openscriptures/morphhb-parsing
+
+*/
 var morphCodes = {
 	'partOfSpeech': {
 		'A': 'Adjective',
