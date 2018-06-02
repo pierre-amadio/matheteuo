@@ -54,6 +54,9 @@ Window {
 
 
     /*
+
+      DEPRECATED: there seems to be an OSHM module now.
+
       There is no sword module yet to get OSHB morphological code informations.
       However, there is a simple javascript class that generate a human readable
       description based on a OSHB morphological code.
