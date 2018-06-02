@@ -52,8 +52,8 @@ installmgr -ri CrossWire LXX
 
 #Morphological repositories
 
-#Needed if you installed MorphGNT
-installmgr -ri CrossWire Robinson
+#Needed if you installed OSHB
+installmgr -ri CrossWire OSHM
 
 #Needed if you installed LXX
 installmgr -ri CrossWire Packard

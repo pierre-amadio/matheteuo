@@ -113,13 +113,16 @@ void  swordWrapper::wordInfoRequested(int wordIndex){
     wordInfo * cw=wordInfoListModel[wordIndex];
     QString strongText=getStrongInfo(curModule,cw);
     QString morphText=getMorphInfo(curModule,cw);
-    if(curModule=="OSHB"){
-        rootObject->setProperty("oshbMorphCode",morphText);
-        rootObject->setProperty("strongViewText",strongText);
-    } else {
-        rootObject->setProperty("strongViewText",strongText);
-        rootObject->setProperty("morphViewText",morphText);
-    }
+    //Once upon a time,there was no OSHM morph module
+    //the c++ backend would then reset the oshbMorphCode property
+    //directly in qml and qml would parse it with javascript.
+    //if(curModule=="OSHB"){
+    //    rootObject->setProperty("oshbMorphCode",morphText);
+    //    rootObject->setProperty("strongViewText",strongText);
+    //} else {
+    rootObject->setProperty("strongViewText",strongText);
+    rootObject->setProperty("morphViewText",morphText);
+    //}
 }
 
 //return a list of book name available i n moduleName module.
@@ -384,7 +387,14 @@ QString swordWrapper::getMorphInfo(QString module, wordInfo * src){
 
     if(module=="OSHB") {
         if(src->morphCode.left(5)=="oshm:") {
-            out=QString(src->morphCode);
+            QString q=QString(src->morphCode).mid(5,src->morphCode.length()-5);
+            target = library.getModule("OSHM");
+            if (!target) {qDebug()<<"Ooops OSHM morphological module not found"; }
+            target->setKey(q.toStdString().c_str());
+            out=target->renderText();
+            //When there was no OSHM module the parsing was done in qml
+            //and the c++  backend was setting some qml property with the raw code.
+            //out=QString(src->morphCode);
         } else {
             out="";
         }
