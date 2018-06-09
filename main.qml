@@ -319,6 +319,12 @@ Window {
 
 
         focus: true
+
+       Keys.onPressed: {
+           if(event.key===Qt.Key_Plus) {curVersePixelSize++;}
+           if(event.key===Qt.Key_Minus) {curVersePixelSize--;}
+       }
+
         TextArea{
             id: verseWindow
             textFormat: Text.RichText
