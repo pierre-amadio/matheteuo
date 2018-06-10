@@ -11,6 +11,6 @@ The following books are supported:
 * [MorphGNT](http://morphgnt.org/) : SBL Greek New Testament
 * LXX : Septuagint
 
-Matheteuo should runs on any Linux box. It has been tested wint Debian Stretch, Ubuntu 16.04 and Fedora 28. As long as the Sword library and Qt are installed, i see no reason it could not run on Mac or even Windows. However, this has not been tested and i have no plan to try :-) I may try to see if it can be run on Android.
+Matheteuo should runs on any Linux box. It has been tested with Debian Stretch, Ubuntu 16.04 and Fedora 28. As long as the Sword library and Qt are installed, i see no reason it could not run on Mac or even Windows. However, this has not been tested and i have no plan to try :-) I may try to see if it can be run on Android.
 
 Read the INSTALL.txt file for installation instructions.
