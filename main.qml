@@ -51,6 +51,7 @@ Window {
     property string favHebrewFont: "Ezra SIL"
     property string curVerseFont
     property int curVersePixelSize: 42
+    property int smallPixelSizeFactor: 3
 
 
     /*
@@ -319,8 +320,8 @@ Window {
         focus: true
 
        Keys.onPressed: {
-           if(event.key===Qt.Key_Plus) {curVersePixelSize++;}
-           if(event.key===Qt.Key_Minus) {curVersePixelSize--;}
+           if(event.key===Qt.Key_Plus) {curVersePixelSize=curVersePixelSize+smallPixelSizeFactor;}
+           if(event.key===Qt.Key_Minus) {curVersePixelSize=curVersePixelSize-smallPixelSizeFactor;}
        }
 
         TextArea{
@@ -396,7 +397,7 @@ Window {
 
             font {
                 family: curVerseFont
-                pixelSize: curVersePixelSize/3
+                pixelSize: curVersePixelSize/smallPixelSizeFactor
             }
 
             text:strongViewText
@@ -425,7 +426,7 @@ Window {
 
             font {
                 family: curVerseFont
-                pixelSize: curVersePixelSize/3
+                pixelSize: curVersePixelSize/smallPixelSizeFactor
             }
 
             text:morphViewText
