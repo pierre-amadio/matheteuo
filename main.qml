@@ -50,7 +50,7 @@ Window {
     property string favGreekFont: "Linux Libertine O"
     property string favHebrewFont: "Ezra SIL"
     property string curVerseFont
-    property int curVersePixelSize
+    property int curVersePixelSize: 42
 
 
     /*
@@ -110,11 +110,9 @@ Window {
     onCurModuleLangChanged: {
         if(curModuleLang=="grc") {
             curVerseFont=favGreekFont
-            curVersePixelSize=42
         }
         if(curModuleLang=="he") {
             curVerseFont=favHebrewFont
-            curVersePixelSize=30
         }
     }
 
