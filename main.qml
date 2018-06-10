@@ -50,8 +50,8 @@ Window {
     property string favGreekFont: "Linux Libertine O"
     property string favHebrewFont: "Ezra SIL"
     property string curVerseFont
-    property int curVersePixelSize: 42
-    property int smallPixelSizeFactor: 3
+    property int curVersePixelSize: 55
+    property int smallPixelSizeFactor: 4
 
 
     /*
