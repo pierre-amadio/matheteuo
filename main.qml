@@ -103,6 +103,7 @@ Window {
 
     signal newModuleSelected(string msg)
     signal newWordInfoRequested(int wordIndex)
+    signal newStrongInfoRequested(string wordIndex)
 
     onCurModuleNameChanged: {
         newModuleSelected(curModuleName)
@@ -388,6 +389,12 @@ Window {
                 textColor: globalFontColor
 
             }
+
+
+            onLinkActivated:{
+                newStrongInfoRequested(link)
+            }
+
 
             anchors{
                 top:parent.top

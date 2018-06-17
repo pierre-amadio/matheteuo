@@ -29,7 +29,7 @@
 #include <QQmlContext>
 #include <QDateTime>
 #include <QListView>
-
+#include <QRegularExpression>
 
 using namespace::sword;
 
@@ -106,24 +106,6 @@ void swordWrapper::verseChangedSlot(int verseNbr){
     rootObject->setProperty("morphViewText","");
 }
 
-//the user clicked on a word to request strong lexicon & morph informations.
-void  swordWrapper::wordInfoRequested(int wordIndex){
-    QObject *rootObject = AppEngine->rootObjects().first();
-    QString curModule=rootObject->property("curModuleName").toString();
-    wordInfo * cw=wordInfoListModel[wordIndex];
-    QString strongText=getStrongInfo(curModule,cw);
-    QString morphText=getMorphInfo(curModule,cw);
-    //Once upon a time,there was no OSHM morph module
-    //the c++ backend would then reset the oshbMorphCode property
-    //directly in qml and qml would parse it with javascript.
-    //if(curModule=="OSHB"){
-    //    rootObject->setProperty("oshbMorphCode",morphText);
-    //    rootObject->setProperty("strongViewText",strongText);
-    //} else {
-    rootObject->setProperty("strongViewText",strongText);
-    rootObject->setProperty("morphViewText",morphText);
-    //}
-}
 
 //return a list of book name available i n moduleName module.
 QStringList swordWrapper::getBookList(const QString &moduleName){
@@ -304,6 +286,34 @@ QString swordWrapper::getVerse(QString module, QString book ,int chapter, int ve
     return out;
 }
 
+
+/*
+Return the Strong's dictionnary entry for the correct 'lang' (grc for greek or he for hebrew)
+maching index 'number'
+This is in html format.
+*/
+
+QString swordWrapper::getStrongInfo(QString lang, QString number){
+    QString out="none";
+    SWModule * target;
+    SWMgr library(new MarkupFilterMgr(FMT_HTML));
+
+    if(lang=="grc") {
+        target = library.getModule("StrongsGreek");
+    } else {
+        target = library.getModule("StrongsHebrew");
+    }
+
+    if (!target) {
+        qDebug()<<QString("Ooops strong dictionnary for %1 not found").arg(lang);
+    }
+    target->setKey(number.toStdString().c_str());
+    //out=QString(target->renderText());
+    out=htmlizeStrongInfo(QString(target->renderText()));
+    return out;
+}
+
+
 /*
  Set (and return) the strong's lexicon entry for a given src wordInfo.
  This is in html format.
@@ -312,6 +322,7 @@ QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
     QString out="none";
     SWMgr library(new MarkupFilterMgr(FMT_HTML));
     SWModule * target;
+
     if(module=="MorphGNT") {
         //So the strongId should looks like "strong:G2532"
         //And the rootWord something like "lemma.Strong:βίβλος"
@@ -319,13 +330,8 @@ QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
         out.append(src->rootWord.mid(13,src->rootWord.length()-13));
         out.append("</b><br>");
         if(src->StrongId.length()){
-            QString q=src->StrongId.mid(8,src->StrongId.length()-8);
-            target = library.getModule("StrongsGreek");
-            if (!target) {qDebug()<<"Ooops StrongsGreek module not found"; }
-            target->setKey(q.toStdString().c_str());
-            QString tmpRaw=QString(target->renderText());
-            tmpRaw.replace("\n","<br>");
-            out.append(tmpRaw);
+            QString nbr=src->StrongId.mid(8,src->StrongId.length()-8);
+            out.append(getStrongInfo("grc",nbr));
         }
     }
 
@@ -333,13 +339,8 @@ QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
         //So the strongId should looks like "strong:H07225"
         //and the rootWord like:
         out="<b>"+src->displayWord+"</b><br>";
-        QString q=src->StrongId.mid(8,src->StrongId.length()-8);
-        target = library.getModule("StrongsHebrew");
-        if (!target) {qDebug()<<"Ooops StrongsHebrew module not found"; }
-        target->setKey(q.toStdString().c_str());
-        QString tmpRaw=QString(target->renderText());
-        tmpRaw.replace("\n","<br>");
-        out.append(tmpRaw);
+        QString nbr=src->StrongId.mid(8,src->StrongId.length()-8);
+        out.append(getStrongInfo("he",nbr));
     }
 
     if(module=="LXX") {
@@ -348,19 +349,14 @@ QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
             out="<b>";
             out.append(src->displayWord);
             out.append("</b><br>");
-            QString q=src->StrongId.mid(8,src->StrongId.length()-8);
-            if(q.toInt()==0){
+            QString nbr=src->StrongId.mid(8,src->StrongId.length()-8);
+            if(nbr.toInt()==0){
                 //For some strange reason, some strong entry are wrong.
                 //By example Gen 1:2
                 //<w  savlm="strong:GA-NSM">ακατασκευαστος</w>
                 out="";
             } else {
-                target = library.getModule("StrongsGreek");
-                if (!target) {qDebug()<<"Ooops StrongsGreek module not found"; }
-                target->setKey(q.toStdString().c_str());
-                QString tmpRaw=QString(target->renderText());
-                tmpRaw.replace("\n","<br>");
-                out.append(tmpRaw);
+                out.append(getStrongInfo("grc",nbr));
             }
         }
     }
@@ -409,5 +405,79 @@ QString swordWrapper::getMorphInfo(QString module, wordInfo * src){
     }
 
     src->morphDesciption=out;
+    return out;
+}
+
+//the user clicked on a word to request strong lexicon & morph informations.
+void  swordWrapper::wordInfoRequested(int wordIndex){
+    QObject *rootObject = AppEngine->rootObjects().first();
+    QString curModule=rootObject->property("curModuleName").toString();
+
+    wordInfo * cw=wordInfoListModel[wordIndex];
+    QString strongText=getStrongInfo(curModule,cw);
+    QString morphText=getMorphInfo(curModule,cw);
+    //Once upon a time,there was no OSHM morph module
+    //the c++ backend would then reset the oshbMorphCode property
+    //directly in qml and qml would parse it with javascript.
+    //if(curModule=="OSHB"){
+    //    rootObject->setProperty("oshbMorphCode",morphText);
+    //    rootObject->setProperty("strongViewText",strongText);
+    //} else {
+    rootObject->setProperty("strongViewText",strongText);
+    rootObject->setProperty("morphViewText",morphText);
+    //}
+}
+
+
+//the user clicked on a strong number link.
+void  swordWrapper::strongInfoRequested(QString wordIndex){
+    QString nbr=wordIndex.right(wordIndex.length()-1);
+    QString newDesc;
+
+    if(wordIndex.left(1)=="H") {
+        newDesc=getStrongInfo("he",nbr);
+    } else {
+        newDesc=getStrongInfo("grc",nbr);
+    }
+    QObject *rootObject = AppEngine->rootObjects().first();
+    rootObject->setProperty("strongViewText",htmlizeStrongInfo(newDesc));
+
+}
+
+//Change the raw text strong dictionnary entry in html.
+QString swordWrapper::htmlizeStrongInfo(QString raw){
+    QString out=raw;
+    out.replace("\n","<br>");
+
+    /*
+     * Now lets modify the following sort of line with http link:
+     * see HEBREW for 085
+     * see GREEK for 756
+     * link should looks like <a href="H085">HEBREW for 085</a>
+    */
+
+    QString tmp=out;
+    QRegularExpression hre("HEBREW for (\\d+)");
+    hre.setPatternOptions(QRegularExpression::MultilineOption);
+    QRegularExpressionMatchIterator hi = hre.globalMatch(tmp);
+    while (hi.hasNext()) {
+        QRegularExpressionMatch match = hi.next();
+        QString cnbr = match.captured(1);
+        QString orig = match.captured(0);
+        QString newStr = QString("<a href=\"H%1\">%2</a>").arg(cnbr,orig);
+        out.replace(orig,newStr);
+    }
+
+    QRegularExpression gre("GREEK for (\\d+)");
+    gre.setPatternOptions(QRegularExpression::MultilineOption);
+    QRegularExpressionMatchIterator gi = gre.globalMatch(tmp);
+    while (gi.hasNext()) {
+        QRegularExpressionMatch match = gi.next();
+        QString cnbr = match.captured(1);
+        QString orig = match.captured(0);
+        QString newStr = QString("<a href=\"G%1\">%2</a>").arg(cnbr,orig);
+        out.replace(orig,newStr);
+    }
+
     return out;
 }

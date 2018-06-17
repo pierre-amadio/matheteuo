@@ -58,7 +58,9 @@ private:
     QList<wordInfo*> wordInfoListModel;
     QQmlApplicationEngine * AppEngine;
     QString getStrongInfo(QString module, wordInfo * src);
+    QString getStrongInfo(QString lang, QString number);
     QString getMorphInfo(QString module, wordInfo * src);
+    QString htmlizeStrongInfo(QString raw);
 
 signals:
     void maxChapterChanged(int nbrChapter);
@@ -69,6 +71,8 @@ public slots:
     void chapterChangedSlot(int chapterNbr);
     void verseChangedSlot(int verseNbr);
     void wordInfoRequested(int wordIndex);
+    void strongInfoRequested(QString wordIndex);
+
 };
 
 #endif // SWORDWRAPPER_H

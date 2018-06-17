@@ -93,6 +93,12 @@ int main(int argc, char *argv[])
                      mySwordWrapper,SLOT(wordInfoRequested(int))
                      );
 
+    //The user requested more information about another strong entry in the Strong view.
+    QObject::connect(rootObject,SIGNAL(newStrongInfoRequested(QString)),
+                     mySwordWrapper,SLOT(strongInfoRequested(QString))
+                     );
+
+
     //Now that signal are connected to slots, let s fill the menus of the GUI.
     mySwordWrapper->refreshMenus();
 
