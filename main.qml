@@ -438,10 +438,10 @@ Window {
                 visible:false
                 Text{
                     anchors.fill:parent
-                    text:"<"
+                    text:"<b>←</b>"
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: curVersePixelSize/smallPixelSizeFactor
+                    font.pixelSize: 2*curVersePixelSize/smallPixelSizeFactor
 
                 }
 
