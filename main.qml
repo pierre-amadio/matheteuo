@@ -455,10 +455,15 @@ Window {
                     anchors.fill: parent
                     onClicked: {
                             var windex;
-                            windex = strongHistory.pop();
+                            strongHistory.pop();
                             console.log(strongHistory)
-                            console.log("let s got to "+strongHistory[strongHistory.length-1])
-                            newStrongInfoRequested(strongHistory[strongHistory.length-1]);
+                            windex=strongHistory[strongHistory.length-1]
+                            console.log("let s got to "+windex)
+                            curStrongId=windex;
+                            newStrongInfoRequested(windex);
+                            if(strongHistory.length==1) {
+                                strongGoBackRectangle.visible=false;
+                            }
 
                     }
                 }
