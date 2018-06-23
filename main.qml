@@ -26,6 +26,7 @@ Window {
     //opacity: .9
     onHeightChanged: {
         console.log("history="+strongHistory)
+        console.log("curStrongId="+curStrongId)
 
     }
 
@@ -47,6 +48,7 @@ Window {
     property string morphViewText:"le morph"
 
     property var strongHistory : []
+    property string curStrongId : ""
 
 
     /*
@@ -404,12 +406,8 @@ Window {
 
 
             onLinkActivated:{
-                console.log(strongHistory);
-                if(strongHistory.length==0) {
-                    console.log("plop")
-                }
-
                 strongHistory.push(link);
+                curStrongId=link;
                 newStrongInfoRequested(link);
                 strongGoBackRectangle.visible=true;
 
@@ -456,17 +454,12 @@ Window {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        console.log("history "+strongHistory)
-                        console.log("l="+strongHistory.length)
-                        if(strongHistory.length>0){
                             var windex;
                             windex = strongHistory.pop();
-                            newStrongInfoRequested(windex);
-                        } else {
-                            console.log("we should display entry "+strongHistory)
-                        }
+                            console.log(strongHistory)
+                            console.log("let s got to "+strongHistory[strongHistory.length-1])
+                            newStrongInfoRequested(strongHistory[strongHistory.length-1]);
 
-                        console.log(windex);
                     }
                 }
             }

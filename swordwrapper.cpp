@@ -419,6 +419,7 @@ void  swordWrapper::wordInfoRequested(int wordIndex){
     QVariantList newStrongHistory;
     newStrongHistory.append(strongCode);
     rootObject->setProperty("strongHistory",newStrongHistory);
+    rootObject->setProperty("curStrongId",strongCode);
     QString strongText=getStrongInfo(curModule,cw);
     QString morphText=getMorphInfo(curModule,cw);
     //Once upon a time,there was no OSHM morph module
