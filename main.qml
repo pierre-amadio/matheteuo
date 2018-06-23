@@ -25,6 +25,7 @@ Window {
     color: globalBgColor
     //opacity: .9
     onHeightChanged: {
+        console.log("history="+strongHistory)
 
     }
 
@@ -43,7 +44,10 @@ Window {
 
     property string mainTextModel:"pika coin coin"
     property string strongViewText:"le strong"
-    property string morphViewText:"le moprh"
+    property string morphViewText:"le morph"
+
+    property var strongHistory : []
+
 
     /*
      Some fonts looks better than others.
@@ -359,6 +363,9 @@ Window {
             text:mainTextModel
 
             onLinkActivated:{
+                strongHistory=[]
+                //strongHistory.push(link)
+                console.log("Now history is "+strongHistory)
                 newWordInfoRequested(parseInt(link))
             }
 
@@ -397,7 +404,15 @@ Window {
 
 
             onLinkActivated:{
-                newStrongInfoRequested(link)
+                console.log(strongHistory);
+                if(strongHistory.length==0) {
+                    console.log("plop")
+                }
+
+                strongHistory.push(link);
+                newStrongInfoRequested(link);
+                strongGoBackRectangle.visible=true;
+
             }
 
 
@@ -424,7 +439,7 @@ Window {
                 height:parent.width/15
                 opacity: .50
                 color: "grey"
-                visible:true
+                visible:false
                 Text{
                     anchors.fill:parent
                     text:"<"
@@ -441,7 +456,17 @@ Window {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        console.log("pika")
+                        console.log("history "+strongHistory)
+                        console.log("l="+strongHistory.length)
+                        if(strongHistory.length>0){
+                            var windex;
+                            windex = strongHistory.pop();
+                            newStrongInfoRequested(windex);
+                        } else {
+                            console.log("we should display entry "+strongHistory)
+                        }
+
+                        console.log(windex);
                     }
                 }
             }
