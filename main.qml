@@ -4,6 +4,11 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
 /*
+This is the strongbrowser branch
+
+*/
+
+/*
   Javascript magic to parse OSHB morphological code.
   This comes from https://github.com/openscriptures/morphhb-parsing
 */
