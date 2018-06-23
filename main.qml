@@ -325,10 +325,10 @@ Window {
 
         focus: true
 
-       Keys.onPressed: {
-           if(event.key===Qt.Key_Plus) {curVersePixelSize=curVersePixelSize+smallPixelSizeFactor;}
-           if(event.key===Qt.Key_Minus) {curVersePixelSize=curVersePixelSize-smallPixelSizeFactor;}
-       }
+        Keys.onPressed: {
+            if(event.key===Qt.Key_Plus) {curVersePixelSize=curVersePixelSize+smallPixelSizeFactor;}
+            if(event.key===Qt.Key_Minus) {curVersePixelSize=curVersePixelSize-smallPixelSizeFactor;}
+        }
 
         TextArea{
             id: verseWindow
@@ -413,6 +413,38 @@ Window {
             }
 
             text:strongViewText
+
+            Rectangle {
+                id: strongGoBackRectangle
+                anchors.right: parent.right
+                anchors.rightMargin: 5
+                anchors.top: parent.top
+                anchors.topMargin: 5
+                width:parent.width/15
+                height:parent.width/15
+                opacity: .50
+                color: "grey"
+                visible:true
+                Text{
+                    anchors.fill:parent
+                    text:"<"
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: curVersePixelSize/smallPixelSizeFactor
+
+                }
+
+                border.color: Qt.lighter("grey")
+                border.width: 2
+                radius:5
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        console.log("pika")
+                    }
+                }
+            }
         }
 
 
