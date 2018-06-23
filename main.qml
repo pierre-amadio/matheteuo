@@ -366,8 +366,6 @@ Window {
 
             onLinkActivated:{
                 strongHistory=[]
-                //strongHistory.push(link)
-                console.log("Now history is "+strongHistory)
                 newWordInfoRequested(parseInt(link))
             }
 
@@ -456,9 +454,7 @@ Window {
                     onClicked: {
                             var windex;
                             strongHistory.pop();
-                            console.log(strongHistory)
                             windex=strongHistory[strongHistory.length-1]
-                            console.log("let s got to "+windex)
                             curStrongId=windex;
                             newStrongInfoRequested(windex);
                             if(strongHistory.length==1) {
