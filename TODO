@@ -1,21 +1,21 @@
 * LXX psalm 6:5 link to Strong's Greek 1492 is broken for word αδη
 
-[melmoth@localhost matheteuo]$ diatheke -b StrongsGreek -k 86
-:  86  haides  hah'-dace
+This is due because the following string appear twice:
+GREEK for 1
+
+############
+86  haides  hah'-dace
 
 
- from 1 (as negative particle) and 1492; properly, unseen, i.e. "Hades"
- or the place (state) of departed souls:--grave, hell.
- see GREEK for 1
- see GREEK for 1492
-(StrongsGreek)
+from 1 (as negative particle) and 1492; properly, unseen, i.e. "Hades"
+or the place (state) of departed souls:--grave, hell.
+see GREEK for 1
+see GREEK for 1492
+############
 
-
-Why is "see GREEK for 1492"  ending up in 
-
-<a href="G1">GREEK for 1</a>492 
-instead of
-<a href="G1492">GREEK for 1492</a>
+So, in the first pass or parsing all occurences of "GREEK for 1"
+are changed to <a href="G1">GREEK for 1</a>. wich aslo change
+GREEK for 1492 .
 
    QRegularExpression gre("GREEK for (\\d+)");
     gre.setPatternOptions(QRegularExpression::MultilineOption);
