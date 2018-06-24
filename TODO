@@ -1,2 +1,31 @@
-* LXX psalm 6:5 link to Strong's Greek 1492 is broken.
+* LXX psalm 6:5 link to Strong's Greek 1492 is broken for word αδη
+
+[melmoth@localhost matheteuo]$ diatheke -b StrongsGreek -k 86
+:  86  haides  hah'-dace
+
+
+ from 1 (as negative particle) and 1492; properly, unseen, i.e. "Hades"
+ or the place (state) of departed souls:--grave, hell.
+ see GREEK for 1
+ see GREEK for 1492
+(StrongsGreek)
+
+
+Why is "see GREEK for 1492"  ending up in 
+
+<a href="G1">GREEK for 1</a>492 
+instead of
+<a href="G1492">GREEK for 1492</a>
+
+   QRegularExpression gre("GREEK for (\\d+)");
+    gre.setPatternOptions(QRegularExpression::MultilineOption);
+    QRegularExpressionMatchIterator gi = gre.globalMatch(tmp);
+    while (gi.hasNext()) {
+        QRegularExpressionMatch match = gi.next();
+        QString cnbr = match.captured(1);
+        QString orig = match.captured(0);
+        QString newStr = QString("<a href=\"G%1\">%2</a>").arg(cnbr,orig);
+        out.replace(orig,newStr);
+    }
+
  
