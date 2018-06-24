@@ -453,41 +453,28 @@ void  swordWrapper::strongInfoRequested(QString wordIndex){
 //Change the raw text strong dictionnary entry in html.
 QString swordWrapper::htmlizeStrongInfo(QString raw){
     QString out=raw;
-    out.replace("\n","<br>");
+
 
     /*
      * Now lets modify the following sort of line with http link:
      * see HEBREW for 085
      * see GREEK for 756
      * link should looks like <a href="H085">HEBREW for 085</a>
+     *
+     * Carefull with entry such as αδη in LXX psalm 6:5
+     * where a strong id "GREEK for 1" is actually a substring
+     * of another id in the same article "GREEK for 1492"
     */
 
-    QString tmp=out;
-    QRegularExpression hre("HEBREW for (\\d+)");
+    QRegularExpression hre("HEBREW for (\\d+)\\D*$");
     hre.setPatternOptions(QRegularExpression::MultilineOption);
-    QRegularExpressionMatchIterator hi = hre.globalMatch(tmp);
-    while (hi.hasNext()) {
-        QRegularExpressionMatch match = hi.next();
-        QString cnbr = match.captured(1);
-        QString orig = match.captured(0);
-        QString newStr = QString("<a href=\"H%1\">%2</a>").arg(cnbr,orig);
-        out.replace(orig,newStr);
-    }
+    out.replace(hre,"<a href=\"H\\1\">HEBREW for \\1</a>");
 
-    QRegularExpression gre("GREEK for (\\d+)");
+    QRegularExpression gre("GREEK for (\\d+)\\D*$");
     gre.setPatternOptions(QRegularExpression::MultilineOption);
-    QRegularExpressionMatchIterator gi = gre.globalMatch(tmp);
-    while (gi.hasNext()) {
-        QRegularExpressionMatch match = gi.next();
-        QString cnbr = match.captured(1);
-        QString orig = match.captured(0);
-        qDebug()<<"cnbr"<<cnbr;
-        qDebug()<<"orig"<<orig;
+    out.replace(gre,"<a href=\"G\\1\">GREEK for \\1</a>");
 
-        QString newStr = QString("<a href=\"G%1\">%2</a>").arg(cnbr,orig);
-        qDebug()<<"newStr"<<newStr;
-        out.replace(orig,newStr);
-    }
+    out.replace("\n","<br>");
 
     return out;
 }
