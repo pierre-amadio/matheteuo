@@ -366,6 +366,7 @@ Window {
 
             onLinkActivated:{
                 strongHistory=[]
+		strongGoBackRectangle.visible=false
                 newWordInfoRequested(parseInt(link))
             }
 
