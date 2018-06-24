@@ -4,11 +4,6 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
 /*
-This is the strongbrowser branch
-
-*/
-
-/*
   Javascript magic to parse OSHB morphological code.
   This comes from https://github.com/openscriptures/morphhb-parsing
 */
@@ -47,6 +42,11 @@ Window {
     property string strongViewText:"le strong"
     property string morphViewText:"le morph"
 
+    /*
+    An array storing the past strong id words shown
+    in the strongViewText to be used in order to go back
+    in a previously article.
+    */
     property var strongHistory : []
     property string curStrongId : ""
 
@@ -246,15 +246,12 @@ Window {
                     width: parent.width
                     text: modelData
                 }
-
             }
         }
 
         MyListSelect {
             id:selectChapterView
             width:parent.width/4
-
-
 
             ListView{
                 id:chapterView
@@ -276,14 +273,12 @@ Window {
                     width: parent.width
                     text: modelData
                 }
-
             }
-
         }
+
         MyListSelect {
             id:selectVerseView
             width:parent.width/4
-
 
             ListView{
                 id:singleVerseView
@@ -305,16 +300,9 @@ Window {
                     width: parent.width
                     text: modelData
                 }
-
             }
-
-
-
         }
-
-
     }
-
 
     //Where the current verse is being displayed.
     Rectangle {
@@ -326,13 +314,9 @@ Window {
 
         anchors {
             top:selectVerseRow.bottom
-            //bottom:grammarView.top
             left:rootWindow.left
             right:rootWindow.right
         }
-
-
-
 
         focus: true
 
@@ -344,7 +328,6 @@ Window {
         TextArea{
             id: verseWindow
             textFormat: Text.RichText
-            //anchors.fill:parent
 
             anchors {
                 top:verseView.top
@@ -360,7 +343,6 @@ Window {
                 textColor: globalFontColor
             }
 
-
             readOnly: true
             font {
                 family: curVerseFont
@@ -371,13 +353,10 @@ Window {
 
             onLinkActivated:{
                 strongHistory=[]
-		strongGoBackRectangle.visible=false
+                strongGoBackRectangle.visible=false
                 newWordInfoRequested(parseInt(link))
             }
-
-
         }
-
     }
 
     //Below the verseView, strong and morphological infos.
@@ -405,7 +384,6 @@ Window {
             style: TextAreaStyle{
                 backgroundColor: globalBgColor
                 textColor: globalFontColor
-
             }
 
 
@@ -414,7 +392,6 @@ Window {
                 curStrongId=link;
                 newStrongInfoRequested(link);
                 strongGoBackRectangle.visible=true;
-
             }
 
 
@@ -448,7 +425,6 @@ Window {
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: 2*curVersePixelSize/smallPixelSizeFactor
-
                 }
 
                 border.color: Qt.lighter("grey")
@@ -458,15 +434,14 @@ Window {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                            var windex;
-                            strongHistory.pop();
-                            windex=strongHistory[strongHistory.length-1]
-                            curStrongId=windex;
-                            newStrongInfoRequested(windex);
-                            if(strongHistory.length==1) {
-                                strongGoBackRectangle.visible=false;
-                            }
-
+                        var windex;
+                        strongHistory.pop();
+                        windex=strongHistory[strongHistory.length-1]
+                        curStrongId=windex;
+                        newStrongInfoRequested(windex);
+                        if(strongHistory.length==1) {
+                            strongGoBackRectangle.visible=false;
+                        }
                     }
                 }
             }
