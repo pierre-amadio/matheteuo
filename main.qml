@@ -20,6 +20,8 @@ Window {
     color: globalBgColor
     //opacity: .9
     onHeightChanged: {
+        console.log("history="+strongHistory)
+        console.log("curStrongId="+curStrongId)
 
     }
 
@@ -38,7 +40,16 @@ Window {
 
     property string mainTextModel:"pika coin coin"
     property string strongViewText:"le strong"
-    property string morphViewText:"le moprh"
+    property string morphViewText:"le morph"
+
+    /*
+    An array storing the past strong id words shown
+    in the strongViewText to be used in order to go back
+    in a previously article.
+    */
+    property var strongHistory : []
+    property string curStrongId : ""
+
 
     /*
      Some fonts looks better than others.
@@ -155,6 +166,11 @@ Window {
         fillVerseList(maxVerse)
     }
 
+    onMainTextModelChanged: {
+        strongHistory=[]
+        strongGoBackRectangle.visible=false
+    }
+
     //The horizontal verse selection widgets.
     Row {
         objectName: "selectVerseRow"
@@ -230,15 +246,12 @@ Window {
                     width: parent.width
                     text: modelData
                 }
-
             }
         }
 
         MyListSelect {
             id:selectChapterView
             width:parent.width/4
-
-
 
             ListView{
                 id:chapterView
@@ -260,14 +273,12 @@ Window {
                     width: parent.width
                     text: modelData
                 }
-
             }
-
         }
+
         MyListSelect {
             id:selectVerseView
             width:parent.width/4
-
 
             ListView{
                 id:singleVerseView
@@ -289,16 +300,9 @@ Window {
                     width: parent.width
                     text: modelData
                 }
-
             }
-
-
-
         }
-
-
     }
-
 
     //Where the current verse is being displayed.
     Rectangle {
@@ -310,25 +314,20 @@ Window {
 
         anchors {
             top:selectVerseRow.bottom
-            //bottom:grammarView.top
             left:rootWindow.left
             right:rootWindow.right
         }
 
-
-
-
         focus: true
 
-       Keys.onPressed: {
-           if(event.key===Qt.Key_Plus) {curVersePixelSize=curVersePixelSize+smallPixelSizeFactor;}
-           if(event.key===Qt.Key_Minus) {curVersePixelSize=curVersePixelSize-smallPixelSizeFactor;}
-       }
+        Keys.onPressed: {
+            if(event.key===Qt.Key_Plus) {curVersePixelSize=curVersePixelSize+smallPixelSizeFactor;}
+            if(event.key===Qt.Key_Minus) {curVersePixelSize=curVersePixelSize-smallPixelSizeFactor;}
+        }
 
         TextArea{
             id: verseWindow
             textFormat: Text.RichText
-            //anchors.fill:parent
 
             anchors {
                 top:verseView.top
@@ -344,7 +343,6 @@ Window {
                 textColor: globalFontColor
             }
 
-
             readOnly: true
             font {
                 family: curVerseFont
@@ -354,12 +352,11 @@ Window {
             text:mainTextModel
 
             onLinkActivated:{
+                strongHistory=[]
+                strongGoBackRectangle.visible=false
                 newWordInfoRequested(parseInt(link))
             }
-
-
         }
-
     }
 
     //Below the verseView, strong and morphological infos.
@@ -387,12 +384,14 @@ Window {
             style: TextAreaStyle{
                 backgroundColor: globalBgColor
                 textColor: globalFontColor
-
             }
 
 
             onLinkActivated:{
-                newStrongInfoRequested(link)
+                strongHistory.push(link);
+                curStrongId=link;
+                newStrongInfoRequested(link);
+                strongGoBackRectangle.visible=true;
             }
 
 
@@ -408,6 +407,44 @@ Window {
             }
 
             text:strongViewText
+
+            Rectangle {
+                id: strongGoBackRectangle
+                anchors.right: parent.right
+                anchors.rightMargin: 5
+                anchors.top: parent.top
+                anchors.topMargin: 5
+                width:parent.width/15
+                height:parent.width/15
+                opacity: .50
+                color: "grey"
+                visible:false
+                Text{
+                    anchors.fill:parent
+                    text:"<b>←</b>"
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: 2*curVersePixelSize/smallPixelSizeFactor
+                }
+
+                border.color: Qt.lighter("grey")
+                border.width: 2
+                radius:5
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        var windex;
+                        strongHistory.pop();
+                        windex=strongHistory[strongHistory.length-1]
+                        curStrongId=windex;
+                        newStrongInfoRequested(windex);
+                        if(strongHistory.length==1) {
+                            strongGoBackRectangle.visible=false;
+                        }
+                    }
+                }
+            }
         }
 
 
