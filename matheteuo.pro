@@ -53,4 +53,5 @@ HEADERS += \
 
 DISTFILES += \
     README \
-    INSTALL.txt
+    INSTALL.txt \
+    TODO

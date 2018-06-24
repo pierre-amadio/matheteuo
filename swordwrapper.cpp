@@ -481,7 +481,11 @@ QString swordWrapper::htmlizeStrongInfo(QString raw){
         QRegularExpressionMatch match = gi.next();
         QString cnbr = match.captured(1);
         QString orig = match.captured(0);
+        qDebug()<<"cnbr"<<cnbr;
+        qDebug()<<"orig"<<orig;
+
         QString newStr = QString("<a href=\"G%1\">%2</a>").arg(cnbr,orig);
+        qDebug()<<"newStr"<<newStr;
         out.replace(orig,newStr);
     }
 
