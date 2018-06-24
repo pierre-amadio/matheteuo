@@ -166,6 +166,11 @@ Window {
         fillVerseList(maxVerse)
     }
 
+    onMainTextModelChanged: {
+        strongHistory=[]
+        strongGoBackRectangle.visible=false
+    }
+
     //The horizontal verse selection widgets.
     Row {
         objectName: "selectVerseRow"
