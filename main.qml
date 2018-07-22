@@ -260,7 +260,9 @@ Window {
                 snapMode:ListView.SnapToItem
                 highlightRangeMode:ListView.StrictlyEnforceRange
                 onCurrentItemChanged:{
-                    rootWindow.curChapter=chapterListModel[currentIndex]
+                    if(currentIndex){
+                    rootWindow.curChapter=chapterListModel[currentIndex];
+                    }
                 }
                 delegate:
                     Text{
@@ -287,7 +289,9 @@ Window {
                 snapMode:ListView.SnapToItem
                 highlightRangeMode:ListView.StrictlyEnforceRange
                 onCurrentItemChanged:{
-                    rootWindow.curVerse=verseListModel[currentIndex]
+                    if(currentIndex){
+                    rootWindow.curVerse=verseListModel[currentIndex];
+                    }
                 }
                 delegate:
                     Text{
