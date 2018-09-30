@@ -301,7 +301,6 @@ Window {
         FocusScope {
             width: selectVerseRow.width/4
             height: selectVerseRow.height
-
             id: selectChapterScope
 
 
@@ -373,36 +372,75 @@ Window {
             }
         }
 
-        MyListSelect {
-            id:selectVerseView
-            width:parent.width/4
 
-            ListView{
-                id:singleVerseView
-                anchors.fill:parent
-                model: verseListModel
-                snapMode:ListView.SnapToItem
-                highlightRangeMode:ListView.StrictlyEnforceRange
-                onCurrentItemChanged:{
-                    if(currentIndex){
-                        rootWindow.curVerse=verseListModel[currentIndex];
+        FocusScope{
+            width:selectVerseRow.width/4
+            height:selectVerseRow.height
+            id: selectVerseScope
+
+            MyListSelect {
+                id:selectVerseView
+                width:parent.width
+
+                ListView{
+                    id:singleVerseView
+                    anchors.fill:parent
+                    model: verseListModel
+                    snapMode:ListView.SnapToItem
+                    highlightRangeMode:ListView.StrictlyEnforceRange
+                    onCurrentItemChanged:{
+                        if(currentIndex){
+                            rootWindow.curVerse=verseListModel[currentIndex];
+                        }
                     }
-                }
-                delegate:
-                    Text{
-                    id:verseId
-                    font.pixelSize: 16
-                    color: globalFontColor
-                    height:selectVerseRow.height/1
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    width: parent.width
-                    text: modelData
+
+                    MouseArea { anchors.fill: parent;
+                        onClicked: {
+                            selectVerseScope.focus = true ;
+                            console.log("verse scope");
+                        }
+                    }
+
+                    focus: true
+                    Keys.onPressed: {
+                        console.log("verse key press")
+                        var now=new Date().getTime()
+                        var timeDiff=now-selectVerseView.keyPressLastTime
+                        selectVerseView.keyPressLastTime=new Date().getTime()
+                        if(timeDiff>selectVerseView.searchTimeWindow) {
+                            selectVerseView.searchString=event.text
+                        } else {
+                            selectVerseView.searchString+=event.text
+                        }
+                        console.log("searching verse"+selectVerseView.searchString)
+                        for(var i = 0; i < maxVerse; ++i) {
+                            var tmpVerse=(1+i).toString()
+                            var hitTest=tmpVerse.indexOf(selectVerseView.searchString)
+                            if(hitTest===0 && selectVerseView.searchString!=0 ) {
+                                singleVerseView.currentIndex=i
+                            }
+                        }
+                    }
+
+
+
+
+
+                    delegate:
+                        Text{
+                        id:verseId
+                        font.pixelSize: 16
+                        color: globalFontColor
+                        height:selectVerseRow.height/1
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        width: parent.width
+                        text: modelData
+                    }
                 }
             }
         }
     }
-
     //Where the current verse is being displayed.
     Rectangle {
         id: verseView
