@@ -233,8 +233,6 @@ Window {
             width: selectVerseRow.width/4
             height: selectVerseRow.height
 
-
-
             MyListSelect {
                 id: selectBookView
                 objectName: "selectBookView"
@@ -344,13 +342,14 @@ Window {
                             selectChapterView.searchString+=event.text
                         }
                         console.log("searching chapter"+selectChapterView.searchString)
-                        //for(var i = 0; i < maxChapter; ++i) {
-                        //     var curBookLower=curBookModel[i].toLowerCase();
-                        //     var searchLower=selectBookView.searchString.toLowerCase()
-                        //     if(curBookLower.indexOf(searchLower)===0) {
-                        //         bookListView.currentIndex=i
-                        //     }
-                        //  }
+                        for(var i = 0; i < maxChapter; ++i) {
+                            var tmpChapter=(1+i).toString()
+                            var hitTest=tmpChapter.indexOf(selectChapterView.searchString)
+                            //console.log(tmpChapter+" "+selectChapterView.searchString+" "+hitTest)
+                            if(hitTest===0 && selectChapterView.searchString!=0 ) {
+                                chapterView.currentIndex=i
+                            }
+                        }
 
                     }
 
