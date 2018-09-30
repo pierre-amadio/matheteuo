@@ -343,12 +343,10 @@ Window {
                         console.log("searching chapter"+selectChapterView.searchString)
                         for(var i = 0; i < maxChapter; ++i) {
                             var tmpChapter=(1+i)
-                            if( parseInt(selectChapterView.searchString,10)==tmpChapter ) {
-
+                            if( parseInt(selectChapterView.searchString,10)===tmpChapter ) {
                                 chapterView.currentIndex=i
                             }
                         }
-
                     }
 
                     delegate:
@@ -408,17 +406,12 @@ Window {
                         }
                         console.log("searching verse"+selectVerseView.searchString)
                         for(var i = 0; i < maxVerse; ++i) {
-                            var tmpVerse=(1+i).toString()
-                            var hitTest=tmpVerse.indexOf(selectVerseView.searchString)
-                            if(hitTest===0 && selectVerseView.searchString!=0 ) {
+                            var tmpVerse=1+i
+                            if( parseInt(selectVerseView.searchString,10)===tmpVerse ) {
                                 singleVerseView.currentIndex=i
                             }
                         }
                     }
-
-
-
-
 
                     delegate:
                         Text{
