@@ -97,6 +97,7 @@ Window {
         }
         chapterListModel=tmpArray
         chapterView.currentIndex=0
+        curChapter=1
         newChapterSelected(chapterListModel[chapterView.currentIndex])
     }
 
@@ -108,6 +109,7 @@ Window {
         }
         verseListModel=tmpArray
         singleVerseView.currentIndex=0
+        curVerse=1
         newVerseSelected(verseListModel[singleVerseView.currentIndex])
     }
 
