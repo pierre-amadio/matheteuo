@@ -249,9 +249,7 @@ Window {
                     for(var i = 0; i < curBookModel.length; ++i) {
                         var curBookLower=curBookModel[i].toLowerCase();
                         var searchLower=selectBookView.searchString.toLowerCase()
-                        console.log(searchLower+" index of  "+curBookLower)
                         if(curBookLower.indexOf(searchLower)===0) {
-                            console.log("We have a hit")
                             bookListView.currentIndex=i
                         }
                     }
