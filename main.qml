@@ -237,16 +237,26 @@ Window {
 
                 focus: true
                 Keys.onPressed: {
-                    console.log("yo key pressed"+event.text )
-                    console.log("keyPressLastTime="+selectBookView.keyPressLastTime)
                     var now=new Date().getTime()
                     var timeDiff=now-selectBookView.keyPressLastTime
                     selectBookView.keyPressLastTime=new Date().getTime()
-                    console.log("diff="+timeDiff)
                     if(timeDiff>selectBookView.searchTimeWindow) {
-                        console.log("oui");
+                        selectBookView.searchString=event.text
                     } else {
-                        console.log("non")
+                        selectBookView.searchString+=event.text
+                    }
+                    //console.log("need to search for "+selectBookView.searchString)
+                    //console.log(curBookModel.length)
+                    for(var i = 0; i < curBookModel.length; ++i) {
+                        var curBookLower=curBookModel[i].toLowerCase();
+                        var searchLower=selectBookView.searchString.toLowerCase()
+                        //console.log(curBookLower+" index of  "+searchLower)
+                        if(curBookLower.indexOf(searchLower)===0) {
+                            console.log(curBookLower+" index of  "+searchLower)
+
+                            console.log("We have a hit")
+                            //bookListView.currentIndex=i
+                        }
                     }
 
                 }

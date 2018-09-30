@@ -11,7 +11,7 @@ Rectangle {
     //when was the last time the user press the keyboard to search stuff ?
     property var keyPressLastTime:0
     //search time window in ms.
-    property int searchTimeWindow:2000
+    property int searchTimeWindow:1000
     //what is the current search string ?
     property var searchString:""
     //opacity: .9
