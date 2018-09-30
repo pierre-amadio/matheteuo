@@ -20,8 +20,7 @@ Window {
     color: globalBgColor
     //opacity: .9
     onHeightChanged: {
-        console.log("history="+strongHistory)
-        console.log("curStrongId="+curStrongId)
+        console.log(curModuleName+" "+curBookName+" "+curChapter+" "+curVerse)
 
     }
 
@@ -82,6 +81,7 @@ Window {
     property string globalFontColor: "black"
 
     function cleanBookList(){
+        console.log("cleanBookList called")
         var s=bookListView.model.lenght
         var m=bookListView.model
         while(m[0]!==undefined){
@@ -90,6 +90,7 @@ Window {
     }
 
     function fillChapterList(nbr){
+        console.log("fillChapterList called with "+nbr)
         chapterListModel=[]
         var tmpArray = new Array (0)
         for (var i = 1; i <= nbr; i++){
@@ -97,6 +98,8 @@ Window {
         }
         chapterListModel=tmpArray
         chapterView.currentIndex=0
+        curChapter=1
+        console.log("cur chap="+curChapter)
         newChapterSelected(chapterListModel[chapterView.currentIndex])
     }
 
@@ -108,6 +111,7 @@ Window {
         }
         verseListModel=tmpArray
         singleVerseView.currentIndex=0
+        curVerse=1
         newVerseSelected(verseListModel[singleVerseView.currentIndex])
     }
 
@@ -154,11 +158,13 @@ Window {
 
 
     onMaxChapterChanged: {
+        console.log("need to fil lchapter list with "+maxChapter)
         fillChapterList(maxChapter)
     }
 
     signal newVerseSelected(int verse)
     onCurVerseChanged: {
+        console.log(curBookName+" "+curChapter+" "+curVerse)
         newVerseSelected(curVerse)
     }
 
@@ -251,11 +257,12 @@ Window {
                         var curBookLower=curBookModel[i].toLowerCase();
                         var searchLower=selectBookView.searchString.toLowerCase()
                         //console.log(curBookLower+" index of  "+searchLower)
+                        console.log(searchLower+" index of  "+curBookLower)
+
                         if(curBookLower.indexOf(searchLower)===0) {
-                            console.log(curBookLower+" index of  "+searchLower)
 
                             console.log("We have a hit")
-                            //bookListView.currentIndex=i
+                            bookListView.currentIndex=i
                         }
                     }
 
