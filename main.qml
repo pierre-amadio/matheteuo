@@ -21,6 +21,11 @@ Window {
     //opacity: .9
     onHeightChanged: {
         console.log(curModuleName+" "+curBookName+" "+curChapter+" "+curVerse)
+        var test=""
+        selectBookView.activeFocus ? test="book  have active focus!" : test="book not have active focus"
+        console.log(test)
+        selectChapterView.activeFocus ? test="chapter  have active focus!" : test="chapter not have active focus"
+        console.log(test)
 
     }
 
@@ -221,21 +226,39 @@ Window {
         }
 
 
+        FocusScope {
+            //x: select.x
+            //y: selectBookView.y
+            id: selectBookScope
+            width: selectVerseRow.width/4
+            height: selectVerseRow.height
 
-        MyListSelect {
-            id: selectBookView
-            objectName: "selectBookView"
-            width:parent.width/4
-            ListView{
-                id:bookListView
-                objectName: "bookListView"
-                anchors.fill:parent
-                model:curBookModel
-                snapMode:ListView.SnapToItem
-                highlightRangeMode:ListView.StrictlyEnforceRange
-                onCurrentItemChanged:{
-                    rootWindow.curBookName=curBookModel[currentIndex]
-                }
+
+
+            MyListSelect {
+                id: selectBookView
+                objectName: "selectBookView"
+                width:parent.width
+                ListView{
+                    id:bookListView
+                    objectName: "bookListView"
+                    anchors.fill:parent
+                    model:curBookModel
+
+
+                    MouseArea { anchors.fill: parent;
+                        onClicked: {
+                            selectBookScope.focus = true ;
+                            console.log("book scope");
+                        }
+                    }
+
+
+                    snapMode:ListView.SnapToItem
+                    highlightRangeMode:ListView.StrictlyEnforceRange
+                    onCurrentItemChanged:{
+                        rootWindow.curBookName=curBookModel[currentIndex]
+                    }
 
 
                     focus: true
@@ -275,61 +298,78 @@ Window {
                     }
                 }
             }
+        }
 
-        MyListSelect {
-            id:selectChapterView
-            width:parent.width/4
+        FocusScope {
+            width: selectVerseRow.width/4
+            height: selectVerseRow.height
 
-            ListView{
-                id:chapterView
-                anchors.fill:parent
-                model: chapterListModel
-                snapMode:ListView.SnapToItem
-                highlightRangeMode:ListView.StrictlyEnforceRange
-                onCurrentItemChanged:{
-                    if(currentIndex){
-                        rootWindow.curChapter=chapterListModel[currentIndex];
+            id: selectChapterScope
+
+
+            MyListSelect {
+                id:selectChapterView
+                width:parent.width
+
+                ListView{
+                    id:chapterView
+                    anchors.fill:parent
+                    model: chapterListModel
+                    snapMode:ListView.SnapToItem
+                    highlightRangeMode:ListView.StrictlyEnforceRange
+                    onCurrentItemChanged:{
+                        if(currentIndex){
+                            rootWindow.curChapter=chapterListModel[currentIndex];
+                        }
                     }
-                }
 
 
-                focus: true
-                Keys.onPressed: {
-                    console.log("chapter key press")
-                    var now=new Date().getTime()
-                    var timeDiff=now-selectChapterView.keyPressLastTime
-                    selectChapterView.keyPressLastTime=new Date().getTime()
-                    if(timeDiff>selectChapterView.searchTimeWindow) {
-                        selectChapterView.searchString=event.text
-                    } else {
-                        selectChapterView.searchString+=event.text
+
+                    MouseArea { anchors.fill: parent;
+                        onClicked: {
+                            selectChapterScope.focus = true ;
+                            console.log("chapter scope");
+                        }
                     }
-                    console.log("searching chapter"+selectChapterView.searchString)
-                    //for(var i = 0; i < maxChapter; ++i) {
-                    //     var curBookLower=curBookModel[i].toLowerCase();
-                    //     var searchLower=selectBookView.searchString.toLowerCase()
-                    //     if(curBookLower.indexOf(searchLower)===0) {
-                    //         bookListView.currentIndex=i
-                    //     }
-                    //  }
 
-                }
+                    focus: true
+                    Keys.onPressed: {
+                        console.log("chapter key press")
+                        var now=new Date().getTime()
+                        var timeDiff=now-selectChapterView.keyPressLastTime
+                        selectChapterView.keyPressLastTime=new Date().getTime()
+                        if(timeDiff>selectChapterView.searchTimeWindow) {
+                            selectChapterView.searchString=event.text
+                        } else {
+                            selectChapterView.searchString+=event.text
+                        }
+                        console.log("searching chapter"+selectChapterView.searchString)
+                        //for(var i = 0; i < maxChapter; ++i) {
+                        //     var curBookLower=curBookModel[i].toLowerCase();
+                        //     var searchLower=selectBookView.searchString.toLowerCase()
+                        //     if(curBookLower.indexOf(searchLower)===0) {
+                        //         bookListView.currentIndex=i
+                        //     }
+                        //  }
+
+                    }
 
 
 
 
 
 
-                delegate:
-                    Text{
-                    id:chapterId
-                    font.pixelSize: 16
-                    color: globalFontColor
-                    height:selectVerseRow.height/1
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    width: parent.width
-                    text: modelData
+                    delegate:
+                        Text{
+                        id:chapterId
+                        font.pixelSize: 16
+                        color: globalFontColor
+                        height:selectVerseRow.height/1
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        width: parent.width
+                        text: modelData
+                    }
                 }
             }
         }
