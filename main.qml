@@ -42,9 +42,9 @@ Window {
     property variant chapterListModel: []
     property variant verseListModel: []
 
-    property string mainTextModel:"pika coin coin"
-    property string strongViewText:"le strong"
-    property string morphViewText:"le morph"
+    property string mainTextModel:"μαθητεύω did not find any Sword modules. Check your SWORD_PATH environment variable."
+    property string strongViewText:""
+    property string morphViewText:""
 
     /*
     An array storing the past strong id words shown
