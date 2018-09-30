@@ -189,6 +189,7 @@ Window {
         }
 
 
+
         MyListSelect {
             id: selectModuleView
             objectName: "selectModuleView"
@@ -236,41 +237,44 @@ Window {
                     rootWindow.curBookName=curBookModel[currentIndex]
                 }
 
-                focus: true
-                Keys.onPressed: {
-                    var now=new Date().getTime()
-                    var timeDiff=now-selectBookView.keyPressLastTime
-                    selectBookView.keyPressLastTime=new Date().getTime()
-                    if(timeDiff>selectBookView.searchTimeWindow) {
-                        selectBookView.searchString=event.text
-                    } else {
-                        selectBookView.searchString+=event.text
-                    }
-                    for(var i = 0; i < curBookModel.length; ++i) {
-                        var curBookLower=curBookModel[i].toLowerCase();
-                        var searchLower=selectBookView.searchString.toLowerCase()
-                        if(curBookLower.indexOf(searchLower)===0) {
-                            bookListView.currentIndex=i
+
+                    focus: true
+                    Keys.onPressed: {
+                        console.log("book key press")
+
+                        var now=new Date().getTime()
+                        var timeDiff=now-selectBookView.keyPressLastTime
+                        selectBookView.keyPressLastTime=new Date().getTime()
+                        if(timeDiff>selectBookView.searchTimeWindow) {
+                            selectBookView.searchString=event.text
+                        } else {
+                            selectBookView.searchString+=event.text
                         }
+                        for(var i = 0; i < curBookModel.length; ++i) {
+                            var curBookLower=curBookModel[i].toLowerCase();
+                            var searchLower=selectBookView.searchString.toLowerCase()
+                            if(curBookLower.indexOf(searchLower)===0) {
+                                bookListView.currentIndex=i
+                            }
+                        }
+
                     }
 
-                }
 
-
-                delegate:
-                    Text{
-                    id:bookNameDelegate
-                    objectName: "bookNameDelegate"
-                    font.pixelSize: 16
-                    color: globalFontColor
-                    height:selectVerseRow.height/1
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    width: parent.width
-                    text: modelData
+                    delegate:
+                        Text{
+                        id:bookNameDelegate
+                        objectName: "bookNameDelegate"
+                        font.pixelSize: 16
+                        color: globalFontColor
+                        height:selectVerseRow.height/1
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        width: parent.width
+                        text: modelData
+                    }
                 }
             }
-        }
 
         MyListSelect {
             id:selectChapterView
@@ -287,6 +291,35 @@ Window {
                         rootWindow.curChapter=chapterListModel[currentIndex];
                     }
                 }
+
+
+                focus: true
+                Keys.onPressed: {
+                    console.log("chapter key press")
+                    var now=new Date().getTime()
+                    var timeDiff=now-selectChapterView.keyPressLastTime
+                    selectChapterView.keyPressLastTime=new Date().getTime()
+                    if(timeDiff>selectChapterView.searchTimeWindow) {
+                        selectChapterView.searchString=event.text
+                    } else {
+                        selectChapterView.searchString+=event.text
+                    }
+                    console.log("searching chapter"+selectChapterView.searchString)
+                    //for(var i = 0; i < maxChapter; ++i) {
+                    //     var curBookLower=curBookModel[i].toLowerCase();
+                    //     var searchLower=selectBookView.searchString.toLowerCase()
+                    //     if(curBookLower.indexOf(searchLower)===0) {
+                    //         bookListView.currentIndex=i
+                    //     }
+                    //  }
+
+                }
+
+
+
+
+
+
                 delegate:
                     Text{
                     id:chapterId
