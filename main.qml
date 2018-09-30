@@ -234,6 +234,24 @@ Window {
                 onCurrentItemChanged:{
                     rootWindow.curBookName=curBookModel[currentIndex]
                 }
+
+                focus: true
+                Keys.onPressed: {
+                    console.log("yo key pressed"+event.text )
+                    console.log("keyPressLastTime="+selectBookView.keyPressLastTime)
+                    var now=new Date().getTime()
+                    var timeDiff=now-selectBookView.keyPressLastTime
+                    selectBookView.keyPressLastTime=new Date().getTime()
+                    console.log("diff="+timeDiff)
+                    if(timeDiff>selectBookView.searchTimeWindow) {
+                        console.log("oui");
+                    } else {
+                        console.log("non")
+                    }
+
+                }
+
+
                 delegate:
                     Text{
                     id:bookNameDelegate
@@ -261,7 +279,7 @@ Window {
                 highlightRangeMode:ListView.StrictlyEnforceRange
                 onCurrentItemChanged:{
                     if(currentIndex){
-                    rootWindow.curChapter=chapterListModel[currentIndex];
+                        rootWindow.curChapter=chapterListModel[currentIndex];
                     }
                 }
                 delegate:
@@ -290,7 +308,7 @@ Window {
                 highlightRangeMode:ListView.StrictlyEnforceRange
                 onCurrentItemChanged:{
                     if(currentIndex){
-                    rootWindow.curVerse=verseListModel[currentIndex];
+                        rootWindow.curVerse=verseListModel[currentIndex];
                     }
                 }
                 delegate:
