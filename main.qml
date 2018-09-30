@@ -342,20 +342,14 @@ Window {
                         }
                         console.log("searching chapter"+selectChapterView.searchString)
                         for(var i = 0; i < maxChapter; ++i) {
-                            var tmpChapter=(1+i).toString()
-                            var hitTest=tmpChapter.indexOf(selectChapterView.searchString)
-                            //console.log(tmpChapter+" "+selectChapterView.searchString+" "+hitTest)
-                            if(hitTest===0 && selectChapterView.searchString!=0 ) {
+                            var tmpChapter=(1+i)
+                            if( parseInt(selectChapterView.searchString,10)==tmpChapter ) {
+
                                 chapterView.currentIndex=i
                             }
                         }
 
                     }
-
-
-
-
-
 
                     delegate:
                         Text{
