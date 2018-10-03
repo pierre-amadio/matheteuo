@@ -155,6 +155,7 @@ Window {
 
     signal newChapterSelected(int chapter)
     onCurChapterChanged: {
+        //console.log("curChapter changed:"+curChapter)
         newChapterSelected(curChapter)
     }
 
@@ -315,7 +316,8 @@ Window {
                     snapMode:ListView.SnapToItem
                     highlightRangeMode:ListView.StrictlyEnforceRange
                     onCurrentItemChanged:{
-                        if(currentIndex){
+                        //console.log("current chapter index changed"+currentIndex)
+                        if(currentIndex || currentIndex==0){
                             rootWindow.curChapter=chapterListModel[currentIndex];
                         }
                     }
@@ -381,8 +383,10 @@ Window {
                     snapMode:ListView.SnapToItem
                     highlightRangeMode:ListView.StrictlyEnforceRange
                     onCurrentItemChanged:{
-                        if(currentIndex){
+                        if(currentIndex || currentIndex==0){
+                            if (verseListModel[currentIndex] != undefined) {
                             rootWindow.curVerse=verseListModel[currentIndex];
+                            }
                         }
                     }
 
