@@ -22,10 +22,10 @@ Window {
     onHeightChanged: {
         console.log(curModuleName+" "+curBookName+" "+curChapter+" "+curVerse)
         var test=""
-        selectBookView.activeFocus ? test="book  have active focus!" : test="book not have active focus"
-        console.log(test)
-        selectChapterView.activeFocus ? test="chapter  have active focus!" : test="chapter not have active focus"
-        console.log(test)
+        //selectBookView.activeFocus ? test="book  have active focus!" : test="book not have active focus"
+        //console.log(test)
+        //selectChapterView.activeFocus ? test="chapter  have active focus!" : test="chapter not have active focus"
+        //console.log(test)
 
     }
 
@@ -247,7 +247,7 @@ Window {
                     MouseArea { anchors.fill: parent;
                         onClicked: {
                             selectBookScope.focus = true ;
-                            console.log("book scope");
+                            //console.log("book scope");
                         }
                     }
 
@@ -261,7 +261,7 @@ Window {
 
                     focus: true
                     Keys.onPressed: {
-                        console.log("book key press")
+                        //console.log("book key press")
 
                         var now=new Date().getTime()
                         var timeDiff=now-selectBookView.keyPressLastTime
@@ -325,13 +325,13 @@ Window {
                     MouseArea { anchors.fill: parent;
                         onClicked: {
                             selectChapterScope.focus = true ;
-                            console.log("chapter scope");
+                            //console.log("chapter scope");
                         }
                     }
 
                     focus: true
                     Keys.onPressed: {
-                        console.log("chapter key press")
+                        //console.log("chapter key press")
                         var now=new Date().getTime()
                         var timeDiff=now-selectChapterView.keyPressLastTime
                         selectChapterView.keyPressLastTime=new Date().getTime()
@@ -340,7 +340,7 @@ Window {
                         } else {
                             selectChapterView.searchString+=event.text
                         }
-                        console.log("searching chapter"+selectChapterView.searchString)
+                        //console.log("searching chapter"+selectChapterView.searchString)
                         for(var i = 0; i < maxChapter; ++i) {
                             var tmpChapter=(1+i)
                             if( parseInt(selectChapterView.searchString,10)===tmpChapter ) {
@@ -389,13 +389,13 @@ Window {
                     MouseArea { anchors.fill: parent;
                         onClicked: {
                             selectVerseScope.focus = true ;
-                            console.log("verse scope");
+                            //console.log("verse scope");
                         }
                     }
 
                     focus: true
                     Keys.onPressed: {
-                        console.log("verse key press")
+                        //console.log("verse key press")
                         var now=new Date().getTime()
                         var timeDiff=now-selectVerseView.keyPressLastTime
                         selectVerseView.keyPressLastTime=new Date().getTime()
@@ -404,7 +404,7 @@ Window {
                         } else {
                             selectVerseView.searchString+=event.text
                         }
-                        console.log("searching verse"+selectVerseView.searchString)
+                        //console.log("searching verse"+selectVerseView.searchString)
                         for(var i = 0; i < maxVerse; ++i) {
                             var tmpVerse=1+i
                             if( parseInt(selectVerseView.searchString,10)===tmpVerse ) {
