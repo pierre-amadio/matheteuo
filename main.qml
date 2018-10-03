@@ -20,8 +20,12 @@ Window {
     color: globalBgColor
     //opacity: .9
     onHeightChanged: {
-        console.log("history="+strongHistory)
-        console.log("curStrongId="+curStrongId)
+        console.log(curModuleName+" "+curBookName+" "+curChapter+" "+curVerse)
+        var test=""
+        //selectBookView.activeFocus ? test="book  have active focus!" : test="book not have active focus"
+        //console.log(test)
+        //selectChapterView.activeFocus ? test="chapter  have active focus!" : test="chapter not have active focus"
+        //console.log(test)
 
     }
 
@@ -38,9 +42,9 @@ Window {
     property variant chapterListModel: []
     property variant verseListModel: []
 
-    property string mainTextModel:"pika coin coin"
-    property string strongViewText:"le strong"
-    property string morphViewText:"le morph"
+    property string mainTextModel:"μαθητεύω did not find any Sword modules. Check your SWORD_PATH environment variable."
+    property string strongViewText:""
+    property string morphViewText:""
 
     /*
     An array storing the past strong id words shown
@@ -151,6 +155,7 @@ Window {
 
     signal newChapterSelected(int chapter)
     onCurChapterChanged: {
+        //console.log("curChapter changed:"+curChapter)
         newChapterSelected(curChapter)
     }
 
@@ -190,6 +195,7 @@ Window {
         }
 
 
+
         MyListSelect {
             id: selectModuleView
             objectName: "selectModuleView"
@@ -221,95 +227,211 @@ Window {
         }
 
 
+        FocusScope {
+            //x: select.x
+            //y: selectBookView.y
+            id: selectBookScope
+            width: selectVerseRow.width/4
+            height: selectVerseRow.height
 
-        MyListSelect {
-            id: selectBookView
-            objectName: "selectBookView"
-            width:parent.width/4
-            ListView{
-                id:bookListView
-                objectName: "bookListView"
-                anchors.fill:parent
-                model:curBookModel
-                snapMode:ListView.SnapToItem
-                highlightRangeMode:ListView.StrictlyEnforceRange
-                onCurrentItemChanged:{
-                    rootWindow.curBookName=curBookModel[currentIndex]
-                }
-                delegate:
-                    Text{
-                    id:bookNameDelegate
-                    objectName: "bookNameDelegate"
-                    font.pixelSize: 16
-                    color: globalFontColor
-                    height:selectVerseRow.height/1
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    width: parent.width
-                    text: modelData
+            MyListSelect {
+                id: selectBookView
+                objectName: "selectBookView"
+                width:parent.width
+                ListView{
+                    id:bookListView
+                    objectName: "bookListView"
+                    anchors.fill:parent
+                    model:curBookModel
+
+
+                    MouseArea { anchors.fill: parent;
+                        onClicked: {
+                            selectBookScope.focus = true ;
+                            //console.log("book scope");
+                        }
+                    }
+
+
+                    snapMode:ListView.SnapToItem
+                    highlightRangeMode:ListView.StrictlyEnforceRange
+                    onCurrentItemChanged:{
+                        rootWindow.curBookName=curBookModel[currentIndex]
+                    }
+
+
+                    focus: true
+                    Keys.onPressed: {
+                        //console.log("book key press")
+
+                        var now=new Date().getTime()
+                        var timeDiff=now-selectBookView.keyPressLastTime
+                        selectBookView.keyPressLastTime=new Date().getTime()
+                        if(timeDiff>selectBookView.searchTimeWindow) {
+                            selectBookView.searchString=event.text
+                        } else {
+                            selectBookView.searchString+=event.text
+                        }
+                        for(var i = 0; i < curBookModel.length; ++i) {
+                            var curBookLower=curBookModel[i].toLowerCase();
+                            var searchLower=selectBookView.searchString.toLowerCase()
+                            if(curBookLower.indexOf(searchLower)===0) {
+                                bookListView.currentIndex=i
+                            }
+                        }
+
+                    }
+
+
+                    delegate:
+                        Text{
+                        id:bookNameDelegate
+                        objectName: "bookNameDelegate"
+                        font.pixelSize: 16
+                        color: globalFontColor
+                        height:selectVerseRow.height/1
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        width: parent.width
+                        text: modelData
+                    }
                 }
             }
         }
 
-        MyListSelect {
-            id:selectChapterView
-            width:parent.width/4
+        FocusScope {
+            width: selectVerseRow.width/4
+            height: selectVerseRow.height
+            id: selectChapterScope
 
-            ListView{
-                id:chapterView
-                anchors.fill:parent
-                model: chapterListModel
-                snapMode:ListView.SnapToItem
-                highlightRangeMode:ListView.StrictlyEnforceRange
-                onCurrentItemChanged:{
-                    if(currentIndex){
-                    rootWindow.curChapter=chapterListModel[currentIndex];
+
+            MyListSelect {
+                id:selectChapterView
+                width:parent.width
+
+                ListView{
+                    id:chapterView
+                    anchors.fill:parent
+                    model: chapterListModel
+                    snapMode:ListView.SnapToItem
+                    highlightRangeMode:ListView.StrictlyEnforceRange
+                    onCurrentItemChanged:{
+                        //console.log("current chapter index changed"+currentIndex)
+                        if(currentIndex || currentIndex==0){
+                            rootWindow.curChapter=chapterListModel[currentIndex];
+                        }
                     }
-                }
-                delegate:
-                    Text{
-                    id:chapterId
-                    font.pixelSize: 16
-                    color: globalFontColor
-                    height:selectVerseRow.height/1
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    width: parent.width
-                    text: modelData
+
+
+
+                    MouseArea { anchors.fill: parent;
+                        onClicked: {
+                            selectChapterScope.focus = true ;
+                            //console.log("chapter scope");
+                        }
+                    }
+
+                    focus: true
+                    Keys.onPressed: {
+                        //console.log("chapter key press")
+                        var now=new Date().getTime()
+                        var timeDiff=now-selectChapterView.keyPressLastTime
+                        selectChapterView.keyPressLastTime=new Date().getTime()
+                        if(timeDiff>selectChapterView.searchTimeWindow) {
+                            selectChapterView.searchString=event.text
+                        } else {
+                            selectChapterView.searchString+=event.text
+                        }
+                        //console.log("searching chapter"+selectChapterView.searchString)
+                        for(var i = 0; i < maxChapter; ++i) {
+                            var tmpChapter=(1+i)
+                            if( parseInt(selectChapterView.searchString,10)===tmpChapter ) {
+                                chapterView.currentIndex=i
+                            }
+                        }
+                    }
+
+                    delegate:
+                        Text{
+                        id:chapterId
+                        font.pixelSize: 16
+                        color: globalFontColor
+                        height:selectVerseRow.height/1
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        width: parent.width
+                        text: modelData
+                    }
                 }
             }
         }
 
-        MyListSelect {
-            id:selectVerseView
-            width:parent.width/4
 
-            ListView{
-                id:singleVerseView
-                anchors.fill:parent
-                model: verseListModel
-                snapMode:ListView.SnapToItem
-                highlightRangeMode:ListView.StrictlyEnforceRange
-                onCurrentItemChanged:{
-                    if(currentIndex){
-                    rootWindow.curVerse=verseListModel[currentIndex];
+        FocusScope{
+            width:selectVerseRow.width/4
+            height:selectVerseRow.height
+            id: selectVerseScope
+
+            MyListSelect {
+                id:selectVerseView
+                width:parent.width
+
+                ListView{
+                    id:singleVerseView
+                    anchors.fill:parent
+                    model: verseListModel
+                    snapMode:ListView.SnapToItem
+                    highlightRangeMode:ListView.StrictlyEnforceRange
+                    onCurrentItemChanged:{
+                        if(currentIndex || currentIndex==0){
+                            if (verseListModel[currentIndex] != undefined) {
+                            rootWindow.curVerse=verseListModel[currentIndex];
+                            }
+                        }
                     }
-                }
-                delegate:
-                    Text{
-                    id:verseId
-                    font.pixelSize: 16
-                    color: globalFontColor
-                    height:selectVerseRow.height/1
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    width: parent.width
-                    text: modelData
+
+                    MouseArea { anchors.fill: parent;
+                        onClicked: {
+                            selectVerseScope.focus = true ;
+                            //console.log("verse scope");
+                        }
+                    }
+
+                    focus: true
+                    Keys.onPressed: {
+                        //console.log("verse key press")
+                        var now=new Date().getTime()
+                        var timeDiff=now-selectVerseView.keyPressLastTime
+                        selectVerseView.keyPressLastTime=new Date().getTime()
+                        if(timeDiff>selectVerseView.searchTimeWindow) {
+                            selectVerseView.searchString=event.text
+                        } else {
+                            selectVerseView.searchString+=event.text
+                        }
+                        //console.log("searching verse"+selectVerseView.searchString)
+                        for(var i = 0; i < maxVerse; ++i) {
+                            var tmpVerse=1+i
+                            if( parseInt(selectVerseView.searchString,10)===tmpVerse ) {
+                                singleVerseView.currentIndex=i
+                            }
+                        }
+                    }
+
+                    delegate:
+                        Text{
+                        id:verseId
+                        font.pixelSize: 16
+                        color: globalFontColor
+                        height:selectVerseRow.height/1
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        width: parent.width
+                        text: modelData
+                    }
                 }
             }
         }
     }
-
     //Where the current verse is being displayed.
     Rectangle {
         id: verseView
