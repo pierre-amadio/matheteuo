@@ -398,8 +398,8 @@ QString swordWrapper::getMorphInfo(QString module, wordInfo * src){
 
     if(module=="LXX") {
         QString q=src->morphCode.mid(8,src->morphCode.length()-8);
-        target = library.getModule("Packard");
-        if (!target) {qDebug()<<"Ooops Packard morphological module not found"; }
+        target = library.getModule("Robinson");
+        if (!target) {qDebug()<<"Ooops Robinson morphological module not found"; }
         target->setKey(q.toStdString().c_str());
         out=target->renderText();
     }

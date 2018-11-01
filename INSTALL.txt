@@ -55,12 +55,8 @@ installmgr -ri CrossWire LXX
 #Needed if you installed OSHB
 installmgr -ri CrossWire OSHM
 
-#Needed if you installed MorphGNT
+#Needed if you installed MorphGNT or LXX
 installmgr -ri CrossWire Robinson
-
-#Needed if you installed LXX
-installmgr -ri CrossWire Packard
-
 
 
 #Strong's dictionnary
