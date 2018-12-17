@@ -14,6 +14,17 @@ mkdir ~/.fonts
 cp EzraSIL2.51/*ttf ~/.fonts/
 fc-cache -v
 
+# Tyndalehouse also provide some other fonts:
+# https://tyndalehouse.com/unicode-font-kit
+#
+# wget http://legacy.tyndale.cam.ac.uk/Fonts/download/TyndaleUnicodeMac.zip
+# unzip TyndaleUnicodeMac.zip
+# mkdir ~/.fonts
+# cp ./TyndaleUnicodeMac/Mac\ Tyndale\ Unicode/Cardo\ Font/Cardo98s.ttf ~/.fonts/
+# fc-cache  -v
+# 
+# Use "Cardo" in favHebrewFont an favGreekFont 
+
 #The hebrew rendering of "Linux Libertine O" is fine, but when a letter
 #has 2 masoretic mark (let say, an atnach and a qametz as in Amos 7:1)
 #things gets much more easy to read with ezra SIL.
