@@ -318,7 +318,9 @@ Window {
                     onCurrentItemChanged:{
                         //console.log("current chapter index changed"+currentIndex)
                         if(currentIndex || currentIndex==0){
-                            rootWindow.curChapter=chapterListModel[currentIndex];
+                            if(chapterListModel[currentIndex]!==undefined) {
+                                rootWindow.curChapter=chapterListModel[currentIndex];
+                            }
                         }
                     }
 
@@ -384,8 +386,8 @@ Window {
                     highlightRangeMode:ListView.StrictlyEnforceRange
                     onCurrentItemChanged:{
                         if(currentIndex || currentIndex==0){
-                            if (verseListModel[currentIndex] != undefined) {
-                            rootWindow.curVerse=verseListModel[currentIndex];
+                            if (verseListModel[currentIndex] !== undefined) {
+                                rootWindow.curVerse=verseListModel[currentIndex];
                             }
                         }
                     }
