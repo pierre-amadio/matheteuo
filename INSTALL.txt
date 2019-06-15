@@ -6,6 +6,9 @@ sudo apt-get -y install libsword-utils libsword-dev fonts-linuxlibertine fonts-s
 #On debian strech, do not use the defautl Qt, install a new one.
 #With the default one, font choosing dones not seems to work.
 
+#On RHEL7.5, do not use Qt > 5.12.0 ( https://bugreports.qt.io/browse/QTBUG-74324 )
+#or install manually  freetype-2.8-12.el7_6.1.x86_64.rpm
+
 #The ezra SIL  fonts do not seems to be packaged  Fedora: 
 #You can either set favHebrewFont in main.qml to use another font (such as "Linux Libertine O" as the greek one).
 #Or, you  can install the ezra SIL font manually:
