@@ -525,6 +525,16 @@ Window {
                   Now it looks like
                   sword://StrongsRealGreek/04238
                   */
+                console.log("link is "+link)
+                if(link.search("sword://StrongsRealGreek/")>=0) {
+                    console.log("link is greek")
+                } else if (link.search("sword://StrongsRealHebrew/")>=0) {
+                    console.log("link is hebrew")
+                } else
+                {
+                    console.log("Cannot parse link")
+                    console.log(link)
+                }
 
                 console.log(link)
                 strongHistory.push(link);
