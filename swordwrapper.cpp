@@ -342,8 +342,6 @@ QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
         //out="<b>"+src->displayWord+"</b><br>";
         QString nbr=src->StrongId.mid(8,src->StrongId.length()-8);
         out.append(getStrongInfo("he",nbr));
-        qDebug()<<getStrongInfo("he",nbr);
-
     }
 
     if(module=="LXX") {

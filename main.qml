@@ -522,19 +522,15 @@ Window {
                   Old style link:
                   <a href="H085">HEBREW for 085</a>
 
-                  Now it looks like
+                  Now, with the Xiphos strongs module, it looks like
                   sword://StrongsRealGreek/04238
                   */
-                console.log("link is "+link)
+
                 var newlink
                 if(link.search("sword://StrongsRealGreek/")==0) {
-                    console.log("link is greek")
                     newlink=link.replace("sword://StrongsRealGreek/","G")
-
                 } else if (link.search("sword://StrongsRealHebrew/")==0) {
-                    console.log("link is hebrew")
                     newlink=link.replace("sword://StrongsRealHebrew/","H")
-
                 } else
                 {
                     console.log("Cannot parse link")
