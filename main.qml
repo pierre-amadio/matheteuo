@@ -526,20 +526,25 @@ Window {
                   sword://StrongsRealGreek/04238
                   */
                 console.log("link is "+link)
-                if(link.search("sword://StrongsRealGreek/")>=0) {
+                var newlink
+                if(link.search("sword://StrongsRealGreek/")==0) {
                     console.log("link is greek")
-                } else if (link.search("sword://StrongsRealHebrew/")>=0) {
+                    newlink=link.replace("sword://StrongsRealGreek/","G")
+
+                } else if (link.search("sword://StrongsRealHebrew/")==0) {
                     console.log("link is hebrew")
+                    newlink=link.replace("sword://StrongsRealHebrew/","H")
+
                 } else
                 {
                     console.log("Cannot parse link")
                     console.log(link)
+                    newlink="H01"
                 }
 
-                console.log(link)
-                strongHistory.push(link);
-                curStrongId=link;
-                newStrongInfoRequested(link);
+                strongHistory.push(newlink);
+                curStrongId=newlink;
+                newStrongInfoRequested(newlink);
                 strongGoBackRectangle.visible=true;
             }
 
