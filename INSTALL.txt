@@ -77,8 +77,12 @@ installmgr -ri CrossWire Robinson
 
 
 #Strong's dictionnary
-installmgr -ri CrossWire StrongsGreek
-installmgr -ri CrossWire StrongsHebrew
+#Regular strongs module. Let s use the Xiphos's one instead.
+#installmgr -ri CrossWire StrongsGreek
+#installmgr -ri CrossWire StrongsHebrew
+installmgr -r "Xiphos"
+installmgr -ri Xiphos StrongsRealGreek
+installmgr -ri Xiphos StrongsRealHebrew
 
 #Check it works:
 installmgr -l

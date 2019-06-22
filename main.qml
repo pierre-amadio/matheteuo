@@ -518,6 +518,15 @@ Window {
 
 
             onLinkActivated:{
+                /*
+                  Old style link:
+                  <a href="H085">HEBREW for 085</a>
+
+                  Now it looks like
+                  sword://StrongsRealGreek/04238
+                  */
+
+                console.log(link)
                 strongHistory.push(link);
                 curStrongId=link;
                 newStrongInfoRequested(link);

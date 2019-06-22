@@ -299,9 +299,9 @@ QString swordWrapper::getStrongInfo(QString lang, QString number){
     SWMgr library(new MarkupFilterMgr(FMT_HTML));
 
     if(lang=="grc") {
-        target = library.getModule("StrongsGreek");
+        target = library.getModule("StrongsRealGreek");
     } else {
-        target = library.getModule("StrongsHebrew");
+        target = library.getModule("StrongsRealHebrew");
     }
 
     if (!target) {
@@ -309,7 +309,8 @@ QString swordWrapper::getStrongInfo(QString lang, QString number){
     }
     target->setKey(number.toStdString().c_str());
     //out=QString(target->renderText());
-    out=htmlizeStrongInfo(QString(target->renderText()));
+    //out=htmlizeStrongInfo(QString(target->renderText()));
+    out=QString(target->renderText());
     return out;
 }
 
@@ -319,16 +320,16 @@ QString swordWrapper::getStrongInfo(QString lang, QString number){
  This is in html format.
 */
 QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
-    QString out="none";
+    QString out="";
     SWMgr library(new MarkupFilterMgr(FMT_HTML));
-    SWModule * target;
+    //SWModule * target;
 
     if(module=="MorphGNT") {
         //So the strongId should looks like "strong:G2532"
         //And the rootWord something like "lemma.Strong:βίβλος"
-        out="<b>";
-        out.append(src->rootWord.mid(13,src->rootWord.length()-13));
-        out.append("</b><br>");
+        //out="<b>";
+        //out.append(src->rootWord.mid(13,src->rootWord.length()-13));
+        //out.append("</b><br>");
         if(src->StrongId.length()){
             QString nbr=src->StrongId.mid(8,src->StrongId.length()-8);
             out.append(getStrongInfo("grc",nbr));
@@ -338,17 +339,19 @@ QString swordWrapper::getStrongInfo(QString module, wordInfo * src){
     if(module=="OSHB"){
         //So the strongId should looks like "strong:H07225"
         //and the rootWord like:
-        out="<b>"+src->displayWord+"</b><br>";
+        //out="<b>"+src->displayWord+"</b><br>";
         QString nbr=src->StrongId.mid(8,src->StrongId.length()-8);
         out.append(getStrongInfo("he",nbr));
+        qDebug()<<getStrongInfo("he",nbr);
+
     }
 
     if(module=="LXX") {
         //So the strongId shouldlooks like "strong:G2316"
         if(src->StrongId.length()){
-            out="<b>";
-            out.append(src->displayWord);
-            out.append("</b><br>");
+            //out="<b>";
+            //out.append(src->displayWord);
+            //out.append("</b><br>");
             QString nbr=src->StrongId.mid(8,src->StrongId.length()-8);
             if(nbr.toInt()==0){
                 //For some strange reason, some strong entry are wrong.
@@ -446,7 +449,8 @@ void  swordWrapper::strongInfoRequested(QString wordIndex){
         newDesc=getStrongInfo("grc",nbr);
     }
     QObject *rootObject = AppEngine->rootObjects().first();
-    rootObject->setProperty("strongViewText",htmlizeStrongInfo(newDesc));
+    //rootObject->setProperty("strongViewText",htmlizeStrongInfo(newDesc));
+    rootObject->setProperty("strongViewText",newDesc);
 
 }
 
