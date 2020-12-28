@@ -23,6 +23,7 @@
 #include "versechunk.h"
 #include <QXmlStreamReader>
 #include <utilxml.h>
+#include <QRegularExpression>
 
 using namespace::sword;
 
@@ -103,8 +104,32 @@ simpleOsisVerseParser::simpleOsisVerseParser(QString verse, QString curModule)
                         qDebug()<<"unknown attributeName"<<attributeName;
                     }
                 } else if(curModule=="OSHB") {
+                        qDebug()<<"xmlTag "<<xmlTag;
+			qDebug()<<"get attribute -1"<<xmlTag.getAttribute("lemma",-1,' ');
+			qDebug()<<"get attribute 0"<<xmlTag.getAttribute("lemma",0,' ');
+			qDebug()<<"get attribute 1"<<xmlTag.getAttribute("lemma",1,' ');
+			qDebug()<<"get attribute 2"<<xmlTag.getAttribute("lemma",2,' ');
                     if(attributeName=="lemma") {
-                        tmpStrong=xmlTag.getAttribute("lemma",0,' ');
+			int goodInd=0;
+			while(1){
+				qDebug()<<"GoodIndex="<<goodInd;
+				QString testString="";	
+				testString=xmlTag.getAttribute("lemma",goodInd,' ');
+
+				QRegularExpression re("H\\d+",QRegularExpression::CaseInsensitiveOption);
+				QRegularExpressionMatch match = re.match(testString);
+				if(match.hasMatch()){
+					qDebug()<<"BINGO"<<testString;
+					tmpStrong=testString;
+				}
+				qDebug()<<"Test"<<testString;
+				qDebug()<<"Len"<<testString.length();
+				if(not testString.length()){ break;}
+				goodInd++;
+			}
+			//qDebug()<<"good ind"<<goodInd;
+
+                        //tmpStrong=xmlTag.getAttribute("lemma",0,' ');
                     } else if (attributeName=="morph") {
                         tmpMorph=xmlTag.getAttribute("morph",0,' ');
                     } else if (attributeName=="n") {
