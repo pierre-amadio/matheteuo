@@ -9,3 +9,13 @@ Version 1.4 gives:
 <w lemma="strong:Hb strong:H7225" morph="oshm:HR/Ncfsa">בְּרֵאשִׁית</w>
 
 Since this change, all entry that have a new strong element in a word's lemma display the sword entry for 8674 (תּתּני / Tatnai)
+######################
+no debug ?
+https://stackoverflow.com/questions/34355549/qdebug-doesnt-print-anything
+
+[melmoth@pamadio SwordSandBox]$ cat  ~/.config/QtProject/qtlogging.ini 
+[Rules]
+*.debug=true
+qt.*.debug=false
+
+
