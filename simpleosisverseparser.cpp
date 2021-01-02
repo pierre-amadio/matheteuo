@@ -23,6 +23,7 @@
 #include "versechunk.h"
 #include <QXmlStreamReader>
 #include <utilxml.h>
+#include <QRegularExpression>
 
 using namespace::sword;
 
@@ -103,8 +104,38 @@ simpleOsisVerseParser::simpleOsisVerseParser(QString verse, QString curModule)
                         qDebug()<<"unknown attributeName"<<attributeName;
                     }
                 } else if(curModule=="OSHB") {
-                    if(attributeName=="lemma") {
-                        tmpStrong=xmlTag.getAttribute("lemma",0,' ');
+                   if(attributeName=="lemma") {
+			int goodInd=0;
+			while(1){
+				/* 
+				Since OSHB 2.1 the content of the lemma tag has changed:
+				diatheke -b OSHB -o avlmn -f OSIS -k Genesis 1:1
+			 
+				Version 1.4 gives:
+				<w lemma="strong:H07225" morph="oshm:HR/Ncfsa" n="1.0">בְּרֵאשִׁית</w>
+					 
+				2.1 now gives:
+				<w lemma="strong:Hb strong:H7225" morph="oshm:HR/Ncfsa">בְּרֵאשִׁית</w>
+
+				This strong:Hb with an invalid strong id result in the strong id for this node being 8674 (תּתּני / Tatnai)
+				Let's make sure the strong attribute we pick is an actual number.
+
+				*/ 
+				QString testString="";	
+				testString=xmlTag.getAttribute("lemma",goodInd,' ');
+
+				QRegularExpression re("H\\d+",QRegularExpression::CaseInsensitiveOption);
+				QRegularExpressionMatch match = re.match(testString);
+				if(match.hasMatch()){
+					//qDebug()<<"BINGO"<<testString;
+					tmpStrong=testString;
+				}
+			if(not testString.length()){ break;}
+				goodInd++;
+			}
+			//qDebug()<<"good ind"<<goodInd;
+
+                        //tmpStrong=xmlTag.getAttribute("lemma",0,' ');
                     } else if (attributeName=="morph") {
                         tmpMorph=xmlTag.getAttribute("morph",0,' ');
                     } else if (attributeName=="n") {
