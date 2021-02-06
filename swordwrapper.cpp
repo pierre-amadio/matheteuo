@@ -470,14 +470,15 @@ QString swordWrapper::htmlizeStrongInfo(QString raw){
     qDebug()<<raw; 
     QRegularExpression hre("<ref target=\\\"StrongsHebrew:(\\d+)\\\">H(\\d+)</ref>");
     hre.setPatternOptions(QRegularExpression::MultilineOption);
-    out.replace(hre,"<a href=\"H\\1\">HEBREW for \\1</a>");
+    out.replace(hre,"<a href=\"sword://StrongsHebrew/\\1\">HEBREW for \\1</a>");
 
     //QRegularExpression gre("GREEK for (\\d+)\\D*$");
     QRegularExpression gre("<ref target=\\\"StrongsGreek:(\\d+)\\\">(\\d+)</ref>");
     gre.setPatternOptions(QRegularExpression::MultilineOption);
-    out.replace(gre,"<a href=\"G\\1\">GREEK for \\1</a>");
+    out.replace(gre,"<a href=\"sword://StrongsGreek/\\1\">GREEK for \\1</a>");
 
     out.replace("\n","<br>");
-
+    qDebug()<<"   ";
+    qDebug()<<out;
     return out;
 }
