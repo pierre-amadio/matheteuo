@@ -527,10 +527,10 @@ Window {
                   */
 
                 var newlink
-                if(link.search("sword://StrongsRealGreek/")==0) {
-                    newlink=link.replace("sword://StrongsRealGreek/","G")
-                } else if (link.search("sword://StrongsRealHebrew/")==0) {
-                    newlink=link.replace("sword://StrongsRealHebrew/","H")
+                if(link.search("sword://StrongsGreek/")==0) {
+                    newlink=link.replace("sword://StrongsGreek/","G")
+                } else if (link.search("sword://StrongsHebrew/")==0) {
+                    newlink=link.replace("sword://StrongsHebrew/","H")
                 } else
                 {
                     console.log("Cannot parse link")

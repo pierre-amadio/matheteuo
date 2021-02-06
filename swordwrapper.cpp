@@ -299,18 +299,18 @@ QString swordWrapper::getStrongInfo(QString lang, QString number){
     SWMgr library(new MarkupFilterMgr(FMT_HTML));
 
     if(lang=="grc") {
-        target = library.getModule("StrongsRealGreek");
+        target = library.getModule("StrongsGreek");
     } else {
-        target = library.getModule("StrongsRealHebrew");
+        target = library.getModule("StrongsHebrew");
     }
 
     if (!target) {
         qDebug()<<QString("Ooops strong dictionnary for %1 not found").arg(lang);
     }
     target->setKey(number.toStdString().c_str());
-    //out=QString(target->renderText());
-    //out=htmlizeStrongInfo(QString(target->renderText()));
     out=QString(target->renderText());
+    out=htmlizeStrongInfo(QString(target->renderText()));
+    //out=QString(target->renderText());
     return out;
 }
 
@@ -467,12 +467,13 @@ QString swordWrapper::htmlizeStrongInfo(QString raw){
      * where a strong id "GREEK for 1" is actually a substring
      * of another id in the same article "GREEK for 1492"
     */
-
-    QRegularExpression hre("HEBREW for (\\d+)\\D*$");
+    qDebug()<<raw; 
+    QRegularExpression hre("<ref target=\\\"StrongsHebrew:(\\d+)\\\">H(\\d+)</ref>");
     hre.setPatternOptions(QRegularExpression::MultilineOption);
     out.replace(hre,"<a href=\"H\\1\">HEBREW for \\1</a>");
 
-    QRegularExpression gre("GREEK for (\\d+)\\D*$");
+    //QRegularExpression gre("GREEK for (\\d+)\\D*$");
+    QRegularExpression gre("<ref target=\\\"StrongsGreek:(\\d+)\\\">(\\d+)</ref>");
     gre.setPatternOptions(QRegularExpression::MultilineOption);
     out.replace(gre,"<a href=\"G\\1\">GREEK for \\1</a>");
 
