@@ -72,9 +72,11 @@ installmgr -ri CrossWire LXX
 #Needed if you installed OSHB
 installmgr -ri CrossWire OSHM
 
-#Needed if you installed MorphGNT or LXX
+#Needed if you installed MorphGNT 
 installmgr -ri CrossWire Robinson
 
+#Needed if you are using LXX
+installmgr -ri CrossWire Packard 
 
 #Strong's dictionnary
 #Regular strongs module. Let s use the Xiphos's one instead.
