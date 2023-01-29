@@ -93,8 +93,10 @@ diatheke -b MorphGNT -o av -f PLAIN -k Mark 1:1
 
 #Let's install qt dev stuff (cmake is probably not needed...)
 
-#On debian:
-sudo apt-get install g++ qt5-default qt5-qmake qt5-doc-html cmake qt5-qmltooling-plugins qttools5-dev-tools libqt5webkit5-dev libqt5svg5-dev qml-module-qtquick2 qml-module-qtquick-controls git
+#On debian: 
+
+sudo apt-get install g++  qtbase5-dev qtwayland5 qtchooser qt5-qmake qtbase5-dev-tools  qt5-doc-html cmake qt5-qmltooling-plugins qttools5-dev-tools libqt5webkit5-dev libqt5svg5-dev qml-module-qtquick2 qml-module-qtquick-controls git
+
 
 #On fedora:
 sudo dnf install gcc qt5-devel qt5-qtwebkit-devel qt5-qtsvg-devel qt5-qtquickcontrols2  qt5-qtquickcontrols  git 
