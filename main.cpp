@@ -23,6 +23,7 @@
 #include "swordwrapper.h"
 #include <QQmlContext>
 #include <QString>
+#include <QVariant>
 
 /*
 c++ and qml:

@@ -24,7 +24,7 @@
 #include <QXmlStreamReader>
 #include <utilxml.h>
 #include <QRegularExpression>
-
+#include <QChar>
 using namespace::sword;
 
 
@@ -38,7 +38,7 @@ simpleOsisVerseParser::simpleOsisVerseParser(QString verse, QString curModule)
     for(int n=0;n<maxLenght;n++){
 
         if(n>1 && verse.mid(n-2,2)=="<w") {
-            if(newWord.mid(0,newWord.length()-2)>0){
+            if(newWord.mid(0,newWord.length()-2).length()>0){
                 wordList.append(newWord.mid(0,newWord.length()-2));
                 newWord="<w";
             }
@@ -76,7 +76,7 @@ simpleOsisVerseParser::simpleOsisVerseParser(QString verse, QString curModule)
             QXmlStreamReader reader(curWord);
 
             while(!reader.atEnd() && !reader.hasError()) {
-                if(reader.readNext() == QXmlStreamReader::StartElement && reader.name() == "w") {
+                if(reader.readNext() == QXmlStreamReader::StartElement && reader.name() == QChar('w')) {
                     tmpFullWord=reader.readElementText();
                 }
                 if(reader.hasError()) {

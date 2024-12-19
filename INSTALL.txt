@@ -97,6 +97,8 @@ diatheke -b MorphGNT -o av -f PLAIN -k Mark 1:1
 
 sudo apt-get install g++  qtbase5-dev qtwayland5 qtchooser qt5-qmake qtbase5-dev-tools  qt5-doc-html cmake qt5-qmltooling-plugins qttools5-dev-tools libqt5webkit5-dev libqt5svg5-dev qml-module-qtquick2 qml-module-qtquick-controls git
 
+#qt6
+sudo apt-get install qt6-declarative-dev libqt63dquick6 libqt6quickcontrols2-6 qml-module-qtquick2 qml-module-qtquick-window2
 
 #On fedora:
 sudo dnf install gcc qt5-devel qt5-qtwebkit-devel qt5-qtsvg-devel qt5-qtquickcontrols2  qt5-qtquickcontrols  git 
@@ -106,6 +108,7 @@ sudo yum install gcc  gcc-c++ qt-devel qt5-qtwebkit-devel qt5-qtsvg-devel qt5-qt
 
 #if you are running ubuntu, install also the following:
 sudo apt-get install qtbase5-dev qml-module-qtquick-controls2 qt5-qtquickcontrols
+sudo apt install qml6-module-*
 
 #get the sources:
 git clone https://github.com/pierre-amadio/matheteuo.git
